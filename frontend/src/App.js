@@ -15,6 +15,8 @@ function App() {
               <Route path='/' exact>
                 <HomePage />
               </Route>
+              <Route path='/tutorials'>tutorials</Route>
+              <Route path='*'>404</Route>
             </Switch>
           </PageSkeleton>
         </BrowserRouter>
