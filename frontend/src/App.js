@@ -3,6 +3,7 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from 'view/HomePage';
 import PageSkeleton from 'view/PageSkeleton';
+import Tutorials from 'view/Tutorials';
 import theme from './theme';
 
 function App() {
@@ -15,7 +16,9 @@ function App() {
               <Route path='/' exact>
                 <HomePage />
               </Route>
-              <Route path='/tutorials'>tutorials</Route>
+              <Route path='/tutorials'>
+                <Tutorials />
+              </Route>
               <Route path='*'>404</Route>
             </Switch>
           </PageSkeleton>

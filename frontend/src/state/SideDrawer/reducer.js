@@ -1,9 +1,18 @@
 import actions from './actions';
 
 const initialState = {
-  levelEasyOpen: false,
-  levelIntermediateOpen: false,
-  levelHardOpen: false,
+  easy: {
+    open: false,
+    label: 'Könnyű',
+  },
+  intermediate: {
+    open: false,
+    label: 'Közepes',
+  },
+  professional: {
+    open: false,
+    label: 'Haladó',
+  },
 };
 
 const reducer = (state, action) => {
@@ -11,13 +20,18 @@ const reducer = (state, action) => {
 
   switch (type) {
     case actions.TOGGLE_EASY_OPEN: {
-      return { ...state, levelEasyOpen: !state.levelEasyOpen };
+      const { open } = state.easy;
+      return { ...state, easy: { ...state.easy, open: !open } };
     }
     case actions.TOGGLE_INTERMEDIATE_OPEN: {
-      return { ...state, levelIntermediateOpen: !state.levelIntermediateOpen };
+      const { open } = state.intermediate;
+
+      return { ...state, intermediate: { ...state.intermediate, open: !open } };
     }
-    case actions.TOGGLE_HARD_OPEN: {
-      return { ...state, levelHardOpen: !state.levelHardOpen };
+    case actions.TOGGLE_PROFESSIONAL_OPEN: {
+      const { open } = state.professional;
+
+      return { ...state, professional: { ...state.professional, open: !open } };
     }
     default:
       return state;

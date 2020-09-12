@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HomePage = () => {
-  return <div>almafa</div>;
+  return <div>home</div>;
 };
 
 export { HomePage as default };

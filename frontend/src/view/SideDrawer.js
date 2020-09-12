@@ -9,11 +9,16 @@ import {
   ListItemText,
   LinearProgress,
 } from '@material-ui/core';
-import { initialState, reducer, actions } from 'state/SideDrawer';
+import { initialState, reducer } from 'state/SideDrawer';
+import {
+  toggleEasy,
+  toggleIntermediate,
+  toggleProfessional,
+} from 'state/SideDrawer/actions';
 import CollapsibleListItem from 'view/CollapsibleListItem';
 import { useAsync } from 'react-async';
 import axios from 'api/axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -59,23 +64,35 @@ const SideDrawer = ({ open, onClose }) => {
 
   const { data, isLoading } = useAsync({ promiseFn });
 
-  const tutorailGroupTitles = React.useMemo(
-    () => ({
-      easy: 'kezdő',
-      intermediate: 'haladó',
-      professional: 'nehéz',
-    }),
-    []
-  );
-
   const history = useHistory();
 
-  const navigateToTutorial = React.useCallback(
-    (id, difficulty) => () => {
-      history.push(`/tutorials/${difficulty}/${id}`);
+  const navigateTo = React.useCallback(
+    (location) => (clickEvent) => {
+      history.push(location);
       onClose();
     },
     [history, onClose]
+  );
+
+  const handleMenuItemClick = React.useCallback(
+    (difficulty) => () => {
+      switch (difficulty) {
+        case 'easy': {
+          dispatch(toggleEasy());
+          break;
+        }
+        case 'intermediate': {
+          dispatch(toggleIntermediate());
+          break;
+        }
+        case 'professional': {
+          dispatch(toggleProfessional());
+          break;
+        }
+        default:
+      }
+    },
+    []
   );
 
   return (
@@ -90,67 +107,43 @@ const SideDrawer = ({ open, onClose }) => {
         <ListItem divider className={classes.menuTitle}>
           <ListItemText>útmutatók</ListItemText>
         </ListItem>
+        <ListItem button onClick={navigateTo('/tutorials')}>
+          <ListItemText>összes</ListItemText>
+        </ListItem>
         {isLoading ? (
           <LinearProgress />
         ) : (
           <React.Fragment>
-            <CollapsibleListItem
-              title={tutorailGroupTitles.easy}
-              onClick={() => {
-                dispatch({ type: actions.TOGGLE_EASY_OPEN });
-              }}
-              open={state.levelEasyOpen}
-            >
-              <List disablePadding>
-                {data.easy.map((tutorial) => (
-                  <ListItem
-                    button
-                    key={tutorial.id}
-                    onClick={navigateToTutorial(tutorial.id, 'easy')}
-                  >
-                    <ListItemText>{tutorial.name}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-            </CollapsibleListItem>
-            <CollapsibleListItem
-              title={tutorailGroupTitles.intermediate}
-              onClick={() => {
-                dispatch({ type: actions.TOGGLE_INTERMEDIATE_OPEN });
-              }}
-              open={state.levelIntermediateOpen}
-            >
-              <List disablePadding>
-                {data.intermediate.map((tutorial) => (
-                  <ListItem
-                    button
-                    key={tutorial.id}
-                    onClick={navigateToTutorial(tutorial.id, 'intermediate')}
-                  >
-                    <ListItemText>{tutorial.name}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-            </CollapsibleListItem>
-            <CollapsibleListItem
-              title={tutorailGroupTitles.professional}
-              onClick={() => {
-                dispatch({ type: actions.TOGGLE_HARD_OPEN });
-              }}
-              open={state.levelHardOpen}
-            >
-              <List disablePadding>
-                {data.professional.map((tutorial) => (
-                  <ListItem
-                    button
-                    key={tutorial.id}
-                    onClick={navigateToTutorial(tutorial.id, 'professional')}
-                  >
-                    <ListItemText>{tutorial.name}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-            </CollapsibleListItem>
+            {Object.entries(state).map(([difficulty, value]) => {
+              return (
+                <CollapsibleListItem
+                  key={difficulty}
+                  title={value.label}
+                  onClick={handleMenuItemClick(difficulty)}
+                  open={value.open}
+                >
+                  <List disablePadding>
+                    <ListItem
+                      button
+                      onClick={navigateTo(`/tutorials/${difficulty}`)}
+                    >
+                      <ListItemText>összes</ListItemText>
+                    </ListItem>
+                    {data[difficulty].map((tutorial) => (
+                      <ListItem
+                        button
+                        key={tutorial.id}
+                        onClick={navigateTo(
+                          `/tutorials/${difficulty}/${tutorial.id}`
+                        )}
+                      >
+                        <ListItemText>{tutorial.name}</ListItemText>
+                      </ListItem>
+                    ))}
+                  </List>
+                </CollapsibleListItem>
+              );
+            })}
           </React.Fragment>
         )}
 
