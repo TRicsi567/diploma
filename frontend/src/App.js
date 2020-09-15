@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from 'view/HomePage';
 import PageSkeleton from 'view/PageSkeleton';
 import Tutorials from 'view/Tutorials';

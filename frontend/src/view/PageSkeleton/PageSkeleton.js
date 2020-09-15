@@ -34,6 +34,9 @@ const PageSkeleton = ({ children }) => {
         onClose={() => {
           setState((prev) => ({ ...prev, menuOpen: false }));
         }}
+        onOpen={() => {
+          setState((prev) => ({ ...prev, menuOpen: true }));
+        }}
       />
       <div className={classes.content}>{children}</div>
       <Footer />

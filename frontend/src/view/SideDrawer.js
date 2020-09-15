@@ -18,7 +18,7 @@ import {
 import CollapsibleListItem from 'view/CollapsibleListItem';
 import { useAsync } from 'react-async';
 import axios from 'api/axios';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const promiseFn = async () => {
-  const { data } = await axios.get('/c++/items/tutorial');
+  const { data } = await axios.get('/c++/items/tutorial?status=published');
 
   const result = { easy: [], intermediate: [], professional: [] };
 
@@ -57,7 +57,7 @@ const promiseFn = async () => {
   return result;
 };
 
-const SideDrawer = ({ open, onClose }) => {
+const SideDrawer = ({ open, onClose, onOpen }) => {
   const classes = useStyles();
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -101,7 +101,7 @@ const SideDrawer = ({ open, onClose }) => {
       anchor='left'
       open={open}
       onClose={onClose}
-    >
+      onOpen={onOpen}>
       <Logo className={classes.logo} />
       <List className={classes.menuList}>
         <ListItem divider className={classes.menuTitle}>
@@ -120,13 +120,11 @@ const SideDrawer = ({ open, onClose }) => {
                   key={difficulty}
                   title={value.label}
                   onClick={handleMenuItemClick(difficulty)}
-                  open={value.open}
-                >
+                  open={value.open}>
                   <List disablePadding>
                     <ListItem
                       button
-                      onClick={navigateTo(`/tutorials/${difficulty}`)}
-                    >
+                      onClick={navigateTo(`/tutorials/${difficulty}`)}>
                       <ListItemText>összes</ListItemText>
                     </ListItem>
                     {data[difficulty].map((tutorial) => (
@@ -135,8 +133,7 @@ const SideDrawer = ({ open, onClose }) => {
                         key={tutorial.id}
                         onClick={navigateTo(
                           `/tutorials/${difficulty}/${tutorial.id}`
-                        )}
-                      >
+                        )}>
                         <ListItemText>{tutorial.name}</ListItemText>
                       </ListItem>
                     ))}
@@ -161,6 +158,7 @@ const SideDrawer = ({ open, onClose }) => {
 SideDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export { SideDrawer as default };
