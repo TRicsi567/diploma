@@ -4,25 +4,28 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from 'view/HomePage';
 import PageSkeleton from 'view/PageSkeleton';
 import Tutorials from 'view/Tutorials';
+import AppProvider from 'state/App';
 import theme from './theme';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
-        <BrowserRouter>
-          <PageSkeleton>
-            <Switch>
-              <Route path='/' exact>
-                <HomePage />
-              </Route>
-              <Route path='/tutorials'>
-                <Tutorials />
-              </Route>
-              <Route path='*'>404</Route>
-            </Switch>
-          </PageSkeleton>
-        </BrowserRouter>
+        <AppProvider>
+          <BrowserRouter>
+            <PageSkeleton>
+              <Switch>
+                <Route path='/' exact>
+                  <HomePage />
+                </Route>
+                <Route path='/tutorials'>
+                  <Tutorials />
+                </Route>
+                <Route path='*'>404</Route>
+              </Switch>
+            </PageSkeleton>
+          </BrowserRouter>
+        </AppProvider>
       </CssBaseline>
     </ThemeProvider>
   );

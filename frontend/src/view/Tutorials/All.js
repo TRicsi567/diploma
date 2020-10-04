@@ -1,11 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grow } from '@material-ui/core';
-import CardLoadingSkeleton from 'view/components/CardLoadingSkeleton';
 import TutorialCard from 'view/components/TutorialCard';
-import { useAsync } from 'react-async';
 import { useHistory } from 'react-router-dom';
-import directus from 'directus';
+import { useAppContext } from 'state/App/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,23 +17,10 @@ const useStyles = makeStyles((theme) => ({
   skeleton: {},
 }));
 
-const promiseFn = async () => {
-  try {
-    const { data } = await directus.getItems('tutorial', {
-      status: 'published',
-    });
-    return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
 const All = () => {
   const classes = useStyles();
-
-  const { data = [], isLoading } = useAsync({ promiseFn });
   const history = useHistory();
+  const [{ tutorials }] = useAppContext();
 
   const navigateToTutorial = React.useCallback(
     (id, difficulty) => (event) => {
@@ -46,27 +31,26 @@ const All = () => {
 
   return (
     <div className={classes.root}>
-      {isLoading
-        ? (() => {
-            const skeletons = [];
-            for (let i = 0; i < 3; i += 1) {
-              skeletons.push(<CardLoadingSkeleton key={i} />);
-            }
-            return skeletons;
-          })()
-        : data.map((tutorial) => (
-            <Grow>
+      {Object.values(tutorials)
+        .flat()
+        .map((tutorial) => (
+          <Grow key={tutorial.id} in>
+            <div>
               <TutorialCard
-                key={tutorial.id}
                 title={tutorial.name}
                 description={tutorial.description}
                 difficulty={tutorial.difficulty}
-                id={tutorial.id}
                 onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
-                iconId={tutorial.icon}
+                imageSrc={
+                  tutorial.image &&
+                  (tutorial.image.thumbnails
+                    ? tutorial.image.thumbnails['medium-contain']
+                    : tutorial.image.src)
+                }
               />
-            </Grow>
-          ))}
+            </div>
+          </Grow>
+        ))}
     </div>
   );
 };

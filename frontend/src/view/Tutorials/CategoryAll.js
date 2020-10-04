@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import CardLoadingSkeleton from 'view/components/CardLoadingSkeleton';
 import TutorialCard from 'view/components/TutorialCard';
-import { useAsync } from 'react-async';
+import { Grow } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import directus from 'directus';
+import { useAppContext } from 'state/App/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,28 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const CategoryAll = ({ category }) => {
   const classes = useStyles();
 
-  const promiseFn = React.useCallback(async () => {
-    try {
-      const { data } = await directus.getItems('tutorial', {
-        status: 'published',
-
-        filter: {
-          difficulty: {
-            eq: category,
-          },
-        },
-        meta: '*',
-      });
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }, [category]);
-
-  const { data = [], isLoading } = useAsync({ promiseFn });
   const history = useHistory();
+
+  const [{ tutorials }] = useAppContext();
 
   const navigateToTutorial = React.useCallback(
     (id, difficulty) => (event) => {
@@ -52,27 +32,28 @@ const CategoryAll = ({ category }) => {
     [history]
   );
 
+  console.log(tutorials[category]);
+
   return (
     <div className={classes.root}>
-      {isLoading
-        ? (() => {
-            const skeletons = [];
-            for (let i = 0; i < 3; i += 1) {
-              skeletons.push(<CardLoadingSkeleton key={i} />);
-            }
-            return skeletons;
-          })()
-        : data.map((tutorial) => (
+      {tutorials[category].map((tutorial) => (
+        <Grow key={tutorial.id} in>
+          <div>
             <TutorialCard
-              key={tutorial.id}
               title={tutorial.name}
               description={tutorial.description}
               difficulty={tutorial.difficulty}
-              id={tutorial.id}
-              iconId={tutorial.icon}
               onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
+              imageSrc={
+                tutorial.image &&
+                (tutorial.image.thumbnails
+                  ? tutorial.image.thumbnails['medium-contain']
+                  : tutorial.image.src)
+              }
             />
-          ))}
+          </div>
+        </Grow>
+      ))}
     </div>
   );
 };

@@ -10,7 +10,6 @@ import {
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import DotIcon from '@material-ui/icons/FiberManualRecord';
-import directus from 'directus';
 import ImagePlaceholder from './ImagePlaceholder';
 
 const useStylese = makeStyles((theme) => ({
@@ -72,27 +71,8 @@ const useStylese = makeStyles((theme) => ({
 }));
 
 const TutorialCard = React.forwardRef(function TutorialCard(props, ref) {
-  const { title, description, id, difficulty, onClick, iconId } = props;
+  const { title, description, difficulty, onClick, imageSrc } = props;
   const classes = useStylese();
-  const [iconURL, setIconUrl] = React.useState(null);
-
-  React.useEffect(() => {
-    (async () => {
-      if (iconId) {
-        try {
-          console.log('????');
-          const { data } = await directus.getFile(`${iconId}`);
-          console.log(data);
-          const src = data.data.thumbnails.find(
-            (thumbnail) => thumbnail.key === 'directus-medium-contain'
-          ).url;
-          setIconUrl(src);
-        } catch (error) {
-          setIconUrl(null);
-        }
-      }
-    })();
-  }, [iconId]);
 
   return (
     <Card
@@ -101,8 +81,8 @@ const TutorialCard = React.forwardRef(function TutorialCard(props, ref) {
       onClick={onClick}>
       <CardActionArea>
         <CardMedia className={classes.media}>
-          {iconURL ? (
-            <img src={iconURL} alt='' />
+          {imageSrc ? (
+            <img src={imageSrc} alt='' />
           ) : (
             <ImagePlaceholder type={difficulty} />
           )}
@@ -122,14 +102,14 @@ const TutorialCard = React.forwardRef(function TutorialCard(props, ref) {
 TutorialCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
   difficulty: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
     .isRequired,
-  iconId: PropTypes.number,
+  imageSrc: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 };
 
 TutorialCard.defaultProps = {
-  iconId: null,
+  imageSrc: null,
 };
 
 export { TutorialCard as default };

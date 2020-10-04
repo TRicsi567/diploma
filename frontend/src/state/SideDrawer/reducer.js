@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  const { payload, type } = action;
+  const { type } = action;
 
   switch (type) {
     case actions.TOGGLE_EASY_OPEN: {

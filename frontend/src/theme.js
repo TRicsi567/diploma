@@ -58,6 +58,11 @@ const theme = createMuiTheme({
         textTransform: 'uppercase',
       },
     },
+    MuiLinearProgress: {
+      barColorPrimary: {
+        backgroundColor: colors.blue,
+      },
+    },
   },
 });
 
