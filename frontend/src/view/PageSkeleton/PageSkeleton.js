@@ -10,9 +10,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     minHeight: '100vh',
+    overflow: 'hidden',
   },
   content: {
     maxWidth: 1280,
+    flexGrow: 1,
     margin: [[0, 'auto']],
   },
 }));

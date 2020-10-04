@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import CardLoadingSkeleton from 'view/components/CardLoadingSkeleton';
 import TutorialCard from 'view/components/TutorialCard';
 import { useAsync } from 'react-async';
-import axios from 'api/axios';
 import { useHistory } from 'react-router-dom';
+import directus from 'directus';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,36 +13,44 @@ const useStyles = makeStyles((theme) => ({
     margin: [[theme.spacing(2), theme.spacing(5)]],
     display: 'grid',
     gridGap: theme.spacing(3),
-    // gridAutoRows: `minmax(${400}px, 1fr)`,
-    gridAutoRows: 400,
-    gridTemplateColumns: `repeat(3, minmax(${300}px, 1fr))`,
+    gridAutoRows: '1.5fr',
+    gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
   },
   skeleton: {},
 }));
 
-const promiseFn = async () => {
-  try {
-    const {
-      data: { data },
-    } = await axios.get(
-      '/c++/items/tutorial?status=published&filter[difficulty]=professional'
-    );
-    return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-const ProfessionalAll = () => {
+const CategoryAll = ({ category }) => {
   const classes = useStyles();
+
+  const promiseFn = React.useCallback(async () => {
+    try {
+      const { data } = await directus.getItems('tutorial', {
+        status: 'published',
+
+        filter: {
+          difficulty: {
+            eq: category,
+          },
+        },
+        meta: '*',
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }, [category]);
 
   const { data = [], isLoading } = useAsync({ promiseFn });
   const history = useHistory();
 
-  const navigateToTutorial = React.useCallback((id, difficulty) => (event) => {
-    history.push(`/tutorials/${difficulty}/${id}`);
-  });
+  const navigateToTutorial = React.useCallback(
+    (id, difficulty) => (event) => {
+      history.push(`/tutorials/${difficulty}/${id}`);
+    },
+    [history]
+  );
 
   return (
     <div className={classes.root}>
@@ -60,6 +69,7 @@ const ProfessionalAll = () => {
               description={tutorial.description}
               difficulty={tutorial.difficulty}
               id={tutorial.id}
+              iconId={tutorial.icon}
               onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
             />
           ))}
@@ -67,4 +77,11 @@ const ProfessionalAll = () => {
   );
 };
 
-export { ProfessionalAll as default };
+CategoryAll.propTypes = {
+  category: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
+    .isRequired,
+};
+
+CategoryAll.defaultProps = {};
+
+export { CategoryAll as default };

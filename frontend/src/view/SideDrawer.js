@@ -17,8 +17,8 @@ import {
 } from 'state/SideDrawer/actions';
 import CollapsibleListItem from 'view/CollapsibleListItem';
 import { useAsync } from 'react-async';
-import axios from 'api/axios';
 import { useHistory } from 'react-router-dom';
+import directus from 'directus';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -47,13 +47,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const promiseFn = async () => {
-  const { data } = await axios.get('/c++/items/tutorial?status=published');
-
+  const { data } = await directus.getItems('tutorial', {
+    status: 'published',
+  });
   const result = { easy: [], intermediate: [], professional: [] };
 
-  data.data.forEach(({ name, difficulty, id }) => {
+  data.forEach(({ name, difficulty, id }) => {
     result[difficulty].push({ name, id });
   });
+
   return result;
 };
 
@@ -102,7 +104,7 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
       open={open}
       onClose={onClose}
       onOpen={onOpen}>
-      <Logo className={classes.logo} />
+      <Logo className={classes.logo} onClick={navigateTo('/')} />
       <List className={classes.menuList}>
         <ListItem divider className={classes.menuTitle}>
           <ListItemText>útmutatók</ListItemText>

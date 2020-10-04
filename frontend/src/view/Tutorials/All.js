@@ -4,8 +4,8 @@ import { Grow } from '@material-ui/core';
 import CardLoadingSkeleton from 'view/components/CardLoadingSkeleton';
 import TutorialCard from 'view/components/TutorialCard';
 import { useAsync } from 'react-async';
-import axios from 'api/axios';
 import { useHistory } from 'react-router-dom';
+import directus from 'directus';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,18 +13,17 @@ const useStyles = makeStyles((theme) => ({
     margin: [[theme.spacing(2), theme.spacing(5)]],
     display: 'grid',
     gridGap: theme.spacing(3),
-    // gridAutoRows: `minmax(${400}px, 1fr)`,
-    gridAutoRows: 400,
-    gridTemplateColumns: `repeat(3, minmax(${300}px, 1fr))`,
+    gridAutoRows: '1.5fr',
+    gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
   },
   skeleton: {},
 }));
 
 const promiseFn = async () => {
   try {
-    const {
-      data: { data },
-    } = await axios.get('/c++/items/tutorial?status=published');
+    const { data } = await directus.getItems('tutorial', {
+      status: 'published',
+    });
     return data;
   } catch (error) {
     console.error(error);
@@ -38,9 +37,12 @@ const All = () => {
   const { data = [], isLoading } = useAsync({ promiseFn });
   const history = useHistory();
 
-  const navigateToTutorial = React.useCallback((id, difficulty) => (event) => {
-    history.push(`/tutorials/${difficulty}/${id}`);
-  });
+  const navigateToTutorial = React.useCallback(
+    (id, difficulty) => (event) => {
+      history.push(`/tutorials/${difficulty}/${id}`);
+    },
+    [history]
+  );
 
   return (
     <div className={classes.root}>
@@ -53,14 +55,17 @@ const All = () => {
             return skeletons;
           })()
         : data.map((tutorial) => (
-            <TutorialCard
-              key={tutorial.id}
-              title={tutorial.name}
-              description={tutorial.description}
-              difficulty={tutorial.difficulty}
-              id={tutorial.id}
-              onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
-            />
+            <Grow>
+              <TutorialCard
+                key={tutorial.id}
+                title={tutorial.name}
+                description={tutorial.description}
+                difficulty={tutorial.difficulty}
+                id={tutorial.id}
+                onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
+                iconId={tutorial.icon}
+              />
+            </Grow>
           ))}
     </div>
   );
