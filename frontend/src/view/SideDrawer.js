@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     boxSizing: 'border-box',
     flexShrink: 0,
+    cursor: 'pointer',
   },
   paper: {
     minWidth: 300,

@@ -5,7 +5,7 @@ import Header from 'view/Header';
 import SideDrawer from 'view/SideDrawer';
 import directus from 'directus';
 import { useAppContext } from 'state/App/context';
-import { setTutorials } from 'state/App/actions';
+import { setHomePageContent, setTutorials } from 'state/App/actions';
 import { useAsync } from 'react-async';
 import { LinearProgress } from '@material-ui/core';
 
@@ -38,20 +38,23 @@ const transformTumbnails = (thumbnails) => {
 };
 
 const promiseFn = async ({ dispatch }) => {
-  const [{ data }, { data: imagesRaw }] = await Promise.all([
-    directus.getItems('tutorial', {
-      status: 'published',
-    }),
-    directus.getFiles({
-      status: 'published',
-      fields: ['id', 'data'],
-      filter: {
-        type: {
-          rlike: 'image/%',
+  const [{ data }, { data: imagesRaw }, { data: homePage }] = await Promise.all(
+    [
+      directus.getItems('tutorial', {
+        status: 'published',
+      }),
+      directus.getFiles({
+        status: 'published',
+        fields: ['id', 'data'],
+        filter: {
+          type: {
+            rlike: 'image/%',
+          },
         },
-      },
-    }),
-  ]);
+      }),
+      directus.getItems('home', { single: 1 }),
+    ]
+  );
 
   const images = imagesRaw.reduce(
     (acc, { id, data: imageData }) => ({
@@ -73,8 +76,8 @@ const promiseFn = async ({ dispatch }) => {
     });
   });
 
-  console.log(result);
   dispatch(setTutorials({ payload: result }));
+  dispatch(setHomePageContent({ payload: homePage.content }));
   return result;
 };
 
@@ -89,11 +92,14 @@ const PageSkeleton = ({ children }) => {
 
   return (
     <div className={classes.root}>
-      <Header
-        onMenuClick={() => {
-          setMenuOpen(true);
-        }}
-      />
+      <div>
+        <Header
+          onMenuClick={() => {
+            setMenuOpen(true);
+          }}
+        />
+        {isLoading && <LinearProgress />}
+      </div>
       <SideDrawer
         open={menuOpen}
         onClose={() => {
@@ -103,9 +109,7 @@ const PageSkeleton = ({ children }) => {
           setMenuOpen(true);
         }}
       />
-      <div className={classes.content}>
-        {isLoading ? <LinearProgress /> : children}
-      </div>
+      {isLoading || <div className={classes.content}>{children}</div>}
       <Footer />
     </div>
   );
