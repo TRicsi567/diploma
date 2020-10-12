@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Grow } from '@material-ui/core';
 import TutorialCard from 'view/components/TutorialCard';
 import { useHistory } from 'react-router-dom';
-import { useAppContext } from 'state/App/context';
+import { useAppState } from 'state/App/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const All = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [{ tutorials }] = useAppContext();
+  const { tutorials } = useAppState();
 
   const navigateToTutorial = React.useCallback(
     (id, difficulty) => (event) => {

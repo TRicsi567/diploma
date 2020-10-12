@@ -4,7 +4,7 @@ import Footer from 'view/Footer';
 import Header from 'view/Header';
 import SideDrawer from 'view/SideDrawer';
 import directus from 'directus';
-import { useAppContext } from 'state/App/context';
+import { useAppDispatch } from 'state/App/context';
 import { setHomePageContent, setTutorials } from 'state/App/actions';
 import { useAsync } from 'react-async';
 import { LinearProgress } from '@material-ui/core';
@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 1280,
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
     margin: [[0, 'auto']],
   },
 }));
@@ -86,7 +88,7 @@ const PageSkeleton = ({ children }) => {
 
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const [, dispatch] = useAppContext();
+  const dispatch = useAppDispatch();
 
   const { isLoading } = useAsync({ promiseFn, dispatch });
 

@@ -2,21 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { initialState, reducer } from './reducer';
 
-const AppContext = React.createContext();
+const AppStateContext = React.createContext();
+const AppDispatchContext = React.createContext();
 
-const useAppContext = () => {
-  const context = React.useContext(AppContext);
+const useAppState = () => {
+  const context = React.useContext(AppStateContext);
+  return context;
+};
+
+const useAppDispatch = () => {
+  const context = React.useContext(AppDispatchContext);
   return context;
 };
 
 const AppProvider = ({ children }) => {
-  const value = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <AppStateContext.Provider value={state}>
+      <AppDispatchContext.Provider value={dispatch}>
+        {children}
+      </AppDispatchContext.Provider>
+    </AppStateContext.Provider>
+  );
 };
 
 AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { AppProvider as default, useAppContext };
+export { AppProvider as default, useAppDispatch, useAppState };

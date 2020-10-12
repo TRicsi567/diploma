@@ -1,18 +1,18 @@
 import React from 'react';
-import { useAppContext } from 'state/App/context';
+import { useAppState } from 'state/App/context';
 import { makeStyles } from '@material-ui/core';
 import htmlParser from 'html-react-parser';
 import { Grow } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: [[theme.spacing(2), theme.spacing(3)]],
+    margin: [[theme.spacing(2), theme.spacing(5)]],
   },
 }));
 
 const HomePage = () => {
   const classes = useStyles();
-  const [{ homePage }] = useAppContext();
+  const { homePage } = useAppState();
   return (
     <Grow in>
       <div className={classes.root}>{htmlParser(homePage)}</div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import All from './All';
 import CategoryAll from './CategoryAll';
+import Tutorial from 'view/Tutorial';
 
 const Tutorials = () => {
   const match = useRouteMatch();
@@ -16,7 +17,7 @@ const Tutorials = () => {
         {({ match: { params } }) => <CategoryAll category={params.category} />}
       </Route>
       <Route path={`${match.path}/:diffuculty/:tutorialId`}>
-        megnyitott tutorial
+        <Tutorial />
       </Route>
     </Switch>
   );
