@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*.js"],
+  "include": ["src/**/*.js", "src/router.js"],
   "exclude": ["**/node_modules"],
   "compilerOptions": {
     "baseUrl": "${workspaceFolderBasename}/src",
