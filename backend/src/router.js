@@ -4,12 +4,11 @@ import bodyParser from 'body-parser';
 import fs from 'fs';
 import childProcess from 'child_process';
 import { v4 as uuidv4 } from 'uuid';
+import chokidar from 'chokidar';
 
 const router = Router();
 
-const FILE_DELETION_TIME_OUT = process.env.FILE_DELETION_TIME_OUT || 10000;
-
-console.log(FILE_DELETION_TIME_OUT);
+const FILE_DELETION_TIME_OUT = process.env.FILE_DELETION_TIME_OUT || 1000 * 60;
 
 const TEMP_FILE_PATH = path.join(__dirname, '..', 'temp');
 
@@ -19,7 +18,6 @@ router.get('/ping', (req, res) => {
 
 router.post('/compile', bodyParser.json(), (req, res) => {
   const { code } = req.body;
-  console.log(':(((', req.body);
   const id = uuidv4();
   if (!code) {
     res.status(400).send();
@@ -28,53 +26,44 @@ router.post('/compile', bodyParser.json(), (req, res) => {
 
   const sessionPath = path.resolve(TEMP_FILE_PATH, id);
 
-  fs.mkdir(sessionPath, (error) => {
-    if (error) {
-      res.status(416).send();
-    }
-  });
+  try {
+    fs.mkdirSync(sessionPath);
 
-  fs.open(path.resolve(sessionPath, 'result'), 'w', (err, fd) => {
-    if (err) {
-      console.error('result open hiba', err);
-      return;
-    }
-    fs.close(fd, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+    setTimeout(() => {
+      fs.rmdirSync(sessionPath, { recursive: true });
+    }, FILE_DELETION_TIME_OUT);
+
+    fs.writeFileSync(path.resolve(sessionPath, 'main.c'), code, {
+      flag: 'w',
     });
-  });
 
-  fs.open(path.resolve(sessionPath, 'main.c'), 'w', (err, fd) => {
-    if (err) {
-      console.error('main open hiba', err);
-      return;
-    }
-    fs.write(fd, code, (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-
-      fs.close(fd, (err) => {
-        setTimeout(() => {
-          fs.rmdir(sessionPath, { recursive: true }, (err) => {
-            if (err) {
-              console.error(err);
-            }
-          });
-        }, FILE_DELETION_TIME_OUT);
+    childProcess.exec(
+      `docker run --rm --volume=${sessionPath}:/usr/app compilebox`,
+      (err) => {
         if (err) {
-          console.error('file', err);
+          console.log(err);
           return;
         }
-      });
-    });
-  });
 
-  res.status(200).send();
+        chokidar
+          .watch(['output.log', 'error.log'], { cwd: sessionPath })
+          .on('add', (fileName) => {
+            const fileContent = fs.readFileSync(
+              path.resolve(sessionPath, fileName)
+            );
+            res.status(200).send(
+              JSON.stringify({
+                succes: fileName === 'output.log',
+                result: fileContent.toString(),
+              })
+            );
+          });
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(416).send();
+  }
 });
 
 // function compileProgram({ command, options = {}, callback }) {

@@ -1,11 +1,14 @@
-FROM node:12-alpine
+FROM alpine:3
 
-RUN apk add g++
+COPY compile.sh /usr/local/bin
 
-RUN apk add docker-cli
+RUN chmod 754 /usr/local/bin/compile.sh
 
-RUN mkdir -p /usr/app/src
+RUN apk add --no-cache \
+    g++
+
+# RUN mkdir -p /usr/app
 
 WORKDIR /usr/app
 
-CMD sh
+ENTRYPOINT [ "compile.sh" ]

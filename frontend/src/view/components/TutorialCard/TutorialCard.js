@@ -14,6 +14,7 @@ import ImagePlaceholder from './ImagePlaceholder';
 
 const useStylese = makeStyles((theme) => ({
   root: {
+    height: '100%',
     '& .MuiCardActionArea-root': {
       display: 'flex',
       flexDirection: 'column',
