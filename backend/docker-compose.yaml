@@ -1,10 +1,28 @@
-version: "3.8"
+version: '3.8'
 
 services:
   backend:
-    image: diploma-backend:latest
-    build: .
+    image: diploma-backend
+    build:
+      context: .
+      dockerfile: ./src/server/Dockerfile
     volumes:
-      - ./src:/usr/app/src,
       - /var/run/docker.sock:/var/run/docker.sock
-    tty: true
+      - temp_files:/usr/temp
+    environment:
+      NODE_ENV: 'production'
+      PORT: 8089
+      FILE_DELETION_TIME_OUT: 60000
+    ports:
+      - '8089:8089'
+  compile-client:
+    image: diploma-compile-client
+    build:
+      context: .
+      dockerfile: ./src/client/Dockerfile
+networks:
+  default:
+    name: 'diploma-network'
+volumes:
+  temp_files:
+    name: diploma-temp-files

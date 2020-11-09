@@ -29,6 +29,7 @@ const CodeEditor = (props) => {
   const ref = React.useRef(null);
 
   const [state, setState] = React.useState(initialValue);
+  const [args, setArgs] = React.useState('');
 
   React.useLayoutEffect(() => {
     const codeMirror = CodeMirror.fromTextArea(ref.current, {
@@ -47,11 +48,21 @@ const CodeEditor = (props) => {
   return (
     <div className={clsx(className, classes.root)}>
       <textarea id='code-editor-placeholder' ref={ref} />
+      <input
+        type='text'
+        value={args}
+        onChange={(event) => {
+          setArgs(event.target.value);
+        }}
+      />
       <Button
         variant='outlined'
         type='button'
         onClick={() => {
-          axios.post('http://localhost:8089/api/compile', { code: state });
+          axios.post('http://localhost:8089/api/compile', {
+            code: state,
+            args,
+          });
         }}>
         fordít
       </Button>
