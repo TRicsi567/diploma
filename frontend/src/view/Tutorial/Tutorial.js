@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Paper, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import CodeEditor from './CodeEditor';
+import CodeEditor from 'view/components/CodeEditor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
   button: {
     flexShrink: 0,
     flexGrow: 0,
-    borderRadius: theme.spacing(0.5),
+    // borderRadius: theme.spacing(0.5),
     '& svg': {
       fill: theme.palette.colors.fg1,
     },
-  },
-  codeEditor: {
-    marginTop: theme.spacing(3),
   },
 }));
 

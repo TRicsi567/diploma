@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const colors = {
   yellow: '#e6db74',
@@ -36,11 +37,33 @@ const theme = createMuiTheme({
         backgroundColor: colors.bg0,
       },
     },
+    MuiTabs: {
+      root: {
+        flexShrink: 0,
+      },
+    },
     MuiIconButton: {
       root: {
+        borderRadius: 4,
+        padding: 4,
         '&:hover': {
           backgroundColor: 'rgba(255, 255, 255, 0.04)',
         },
+      },
+    },
+    MuiButton: {
+      outlined: {
+        border: [[2, 'solid', fade(colors.magenta, 0.2)]],
+        '&$disabled': {
+          color: colors.fg1,
+          border: [[1, 'solid', fade(colors.cyan, 0.1)]],
+          backgroundColor: fade(colors.cyan, 0.3),
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        borderColor: colors.fg0,
       },
     },
     MuiListItem: {

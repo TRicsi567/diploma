@@ -28,7 +28,10 @@ app.post('/api/compile', (req, res) => {
   const { code, args } = req.body;
 
   if (!code) {
-    res.status(400).send();
+    res.status(400).send({
+      message: 'Please provide some source code',
+    });
+    return;
   }
 
   const id = uuidv4();
