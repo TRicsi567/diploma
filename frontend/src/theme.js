@@ -43,11 +43,16 @@ const theme = createMuiTheme({
       },
     },
     MuiIconButton: {
+      disabled: {},
       root: {
         borderRadius: 4,
         padding: 4,
+        transition: [['background-color', '300ms', 'ease-out']],
         '&:hover': {
           backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        },
+        '&$disabled': {
+          backgroundColor: fade(colors.yellow, 0.1),
         },
       },
     },
@@ -84,6 +89,9 @@ const theme = createMuiTheme({
     MuiLinearProgress: {
       barColorPrimary: {
         backgroundColor: colors.blue,
+      },
+      barColorSecondary: {
+        backgroundColor: colors.red,
       },
     },
   },

@@ -1,11 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Footer from 'view/Footer';
-import Header from 'view/Header';
-import SideDrawer from 'view/SideDrawer';
-import directus from 'directus';
-import { useAppDispatch } from 'state/App/context';
-import { setHomePageContent, setTutorials } from 'state/App/actions';
+import Footer from 'view/components/Footer';
+import Header from 'view/components/Header';
+import SideDrawer from 'view/components/SideDrawer';
+import directus from 'api/directus';
+import { useAppDispatch, useAppState } from 'state/App/context';
+import {
+  setHomePageContent,
+  setLoading,
+  setTutorials,
+} from 'state/App/actions';
 import { useAsync } from 'react-async';
 import { LinearProgress } from '@material-ui/core';
 
@@ -89,8 +93,13 @@ const PageSkeleton = ({ children }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const dispatch = useAppDispatch();
+  const { loading } = useAppState();
 
   const { isLoading } = useAsync({ promiseFn, dispatch });
+
+  React.useLayoutEffect(() => {
+    dispatch(setLoading({ payload: isLoading }));
+  }, [isLoading, dispatch]);
 
   return (
     <div className={classes.root}>
@@ -100,7 +109,7 @@ const PageSkeleton = ({ children }) => {
             setMenuOpen(true);
           }}
         />
-        {isLoading && <LinearProgress />}
+        {loading && <LinearProgress />}
       </div>
       <SideDrawer
         open={menuOpen}
@@ -111,7 +120,7 @@ const PageSkeleton = ({ children }) => {
           setMenuOpen(true);
         }}
       />
-      {isLoading || <div className={classes.content}>{children}</div>}
+      <div className={classes.content}>{children}</div>
       <Footer />
     </div>
   );

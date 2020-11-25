@@ -12,8 +12,10 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePage = () => {
   const classes = useStyles();
-  const { homePage } = useAppState();
-  console.log(homePage);
+  const { homePage, loading } = useAppState();
+  if (loading) {
+    return null;
+  }
   return (
     <Grow in>
       <div className={classes.root}>{htmlParser(homePage)}</div>

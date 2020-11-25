@@ -7,7 +7,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  LinearProgress,
 } from '@material-ui/core';
 import { initialState, reducer } from 'state/SideDrawer';
 import {
@@ -15,10 +14,10 @@ import {
   toggleIntermediate,
   toggleProfessional,
 } from 'state/SideDrawer/actions';
-import CollapsibleListItem from 'view/CollapsibleListItem';
-import { useAsync } from 'react-async';
+import CollapsibleListItem from 'view/components/CollapsibleListItem';
 import { useHistory } from 'react-router-dom';
-import directus from 'directus';
+import { difficultyLevels } from 'enums';
+import { useAppState } from 'state/App/context';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -47,25 +46,12 @@ const useStyles = makeStyles((theme) => ({
   menuTitle: {},
 }));
 
-const promiseFn = async () => {
-  const { data } = await directus.getItems('tutorial', {
-    status: 'published',
-  });
-  const result = { easy: [], intermediate: [], professional: [] };
-
-  data.forEach(({ name, difficulty, id }) => {
-    result[difficulty].push({ name, id });
-  });
-
-  return result;
-};
-
 const SideDrawer = ({ open, onClose, onOpen }) => {
   const classes = useStyles();
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const { data, isLoading } = useAsync({ promiseFn });
+  const { tutorials } = useAppState();
 
   const history = useHistory();
 
@@ -79,16 +65,17 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
 
   const handleMenuItemClick = React.useCallback(
     (difficulty) => () => {
+      const { EASY, INTERMEDIATE, PROFESSIONAL } = difficultyLevels;
       switch (difficulty) {
-        case 'easy': {
+        case EASY: {
           dispatch(toggleEasy());
           break;
         }
-        case 'intermediate': {
+        case INTERMEDIATE: {
           dispatch(toggleIntermediate());
           break;
         }
-        case 'professional': {
+        case PROFESSIONAL: {
           dispatch(toggleProfessional());
           break;
         }
@@ -113,39 +100,36 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
         <ListItem button onClick={navigateTo('/tutorials')}>
           <ListItemText>összes</ListItemText>
         </ListItem>
-        {isLoading ? (
-          <LinearProgress />
-        ) : (
-          <React.Fragment>
-            {Object.entries(state).map(([difficulty, value]) => {
-              return (
-                <CollapsibleListItem
-                  key={difficulty}
-                  title={value.label}
-                  onClick={handleMenuItemClick(difficulty)}
-                  open={value.open}>
-                  <List disablePadding>
-                    <ListItem
-                      button
-                      onClick={navigateTo(`/tutorials/${difficulty}`)}>
-                      <ListItemText>összes</ListItemText>
-                    </ListItem>
-                    {data[difficulty].map((tutorial) => (
-                      <ListItem
-                        button
-                        key={tutorial.id}
-                        onClick={navigateTo(
-                          `/tutorials/${difficulty}/${tutorial.id}`
-                        )}>
-                        <ListItemText>{tutorial.name}</ListItemText>
-                      </ListItem>
-                    ))}
-                  </List>
-                </CollapsibleListItem>
-              );
-            })}
-          </React.Fragment>
-        )}
+
+        {Object.entries(state).map(([difficulty, value]) => {
+          return (
+            <CollapsibleListItem
+              key={difficulty}
+              title={value.label}
+              onClick={handleMenuItemClick(difficulty)}
+              open={value.open}>
+              <List disablePadding>
+                <ListItem
+                  button
+                  onClick={navigateTo(`/tutorials/${difficulty}`)}>
+                  <ListItemText>összes</ListItemText>
+                </ListItem>
+                {tutorials[difficulty].map((tutorial) => (
+                  <ListItem
+                    button
+                    key={tutorial.id}
+                    onClick={navigateTo(
+                      `/tutorials/${difficulty}/${
+                        tutorial.url_alias || tutorial.id
+                      }`
+                    )}>
+                    <ListItemText>{tutorial.name}</ListItemText>
+                  </ListItem>
+                ))}
+              </List>
+            </CollapsibleListItem>
+          );
+        })}
 
         <ListItem divider className={classes.menuTitle}>
           <ListItemText>hasznos linkek</ListItemText>

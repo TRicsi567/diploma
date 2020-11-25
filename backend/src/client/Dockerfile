@@ -1,4 +1,4 @@
-FROM node:14.15.0-alpine3.12
+FROM alpine:3.12
 
 RUN apk add --no-cache \
     g++

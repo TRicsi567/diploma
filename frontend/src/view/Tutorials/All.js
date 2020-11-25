@@ -23,8 +23,8 @@ const All = () => {
   const { tutorials } = useAppState();
 
   const navigateToTutorial = React.useCallback(
-    (id, difficulty) => (event) => {
-      history.push(`/tutorials/${difficulty}/${id}`);
+    (tutorialName, difficulty) => (event) => {
+      history.push(`/tutorials/${difficulty}/${tutorialName}`);
     },
     [history]
   );
@@ -40,7 +40,10 @@ const All = () => {
                 title={tutorial.name}
                 description={tutorial.description}
                 difficulty={tutorial.difficulty}
-                onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
+                onClick={navigateToTutorial(
+                  tutorial.url_alias || tutorial.id,
+                  tutorial.difficulty
+                )}
                 imageSrc={
                   tutorial.image &&
                   (tutorial.image.thumbnails

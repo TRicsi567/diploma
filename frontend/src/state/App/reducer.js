@@ -3,6 +3,7 @@ import actions from './actions';
 const initialState = {
   tutorials: { easy: [], intermediate: [], professional: [] },
   homePage: null,
+  loading: true,
 };
 
 const reducer = (state, action) => {
@@ -13,6 +14,9 @@ const reducer = (state, action) => {
     }
     case actions.SET_HOME_PAGE_CONTENT: {
       return { ...state, homePage: payload };
+    }
+    case actions.SET_LOADING: {
+      return { ...state, loading: payload };
     }
     default:
       return state;

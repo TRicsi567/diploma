@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { createServer } from 'http';
 import path from 'path';
 import fs from 'fs';
 import childProcess from 'child_process';
@@ -14,7 +13,6 @@ dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 const app = express();
-const server = createServer(app);
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -77,6 +75,6 @@ app.post('/api/compile', (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(chalk.greenBright(`server listening on port ${PORT}`));
 });

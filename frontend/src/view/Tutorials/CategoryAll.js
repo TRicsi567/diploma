@@ -26,13 +26,11 @@ const CategoryAll = ({ category }) => {
   const { tutorials } = useAppState();
 
   const navigateToTutorial = React.useCallback(
-    (id, difficulty) => (event) => {
-      history.push(`/tutorials/${difficulty}/${id}`);
+    (tutorialName, difficulty) => (event) => {
+      history.push(`/tutorials/${difficulty}/${tutorialName}`);
     },
     [history]
   );
-
-  console.log(tutorials[category]);
 
   return (
     <div className={classes.root}>
@@ -43,7 +41,10 @@ const CategoryAll = ({ category }) => {
               title={tutorial.name}
               description={tutorial.description}
               difficulty={tutorial.difficulty}
-              onClick={navigateToTutorial(tutorial.id, tutorial.difficulty)}
+              onClick={navigateToTutorial(
+                tutorial.url_alias || tutorial.id,
+                tutorial.difficulty
+              )}
               imageSrc={
                 tutorial.image &&
                 (tutorial.image.thumbnails

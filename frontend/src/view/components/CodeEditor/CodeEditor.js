@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Paper, Tab, Tabs } from '@material-ui/core';
 import {
   Code as CodeIcon,
@@ -14,6 +15,7 @@ import ArgumentList from './ArgumentList';
 import Code from './Code';
 import Output from './Output';
 import SubmitButton from './SubmitButton';
+import ProgressBar from './ProgressBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +49,7 @@ int main(int argc, const char* argv[])
 }
 `;
 
-const CodeEditor = () => {
+const CodeEditor = ({ className }) => {
   const [activeTab, setActiveTab] = React.useState('code');
   const classes = useStyles();
 
@@ -69,7 +71,7 @@ const CodeEditor = () => {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={clsx(classes.root, className)}>
       <Tabs value={activeTab} onChange={handleTabChange} centered>
         <Tab label='Code' icon={<CodeIcon />} value='code' />
         <Tab
@@ -102,11 +104,16 @@ const CodeEditor = () => {
             className={clsx(classes.tabPanel, classes.output)}>
             <Output />
           </TabPanel>
+          <ProgressBar />
           <SubmitButton />
         </Form>
       </Formik>
     </Paper>
   );
+};
+
+CodeEditor.propTypes = {
+  className: PropTypes.string,
 };
 
 export { CodeEditor as default };

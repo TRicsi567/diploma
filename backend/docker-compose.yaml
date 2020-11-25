@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  backend:
+  server:
     image: diploma-backend
     build:
       context: .
@@ -12,10 +12,12 @@ services:
     environment:
       NODE_ENV: 'production'
       PORT: 8089
-      FILE_DELETION_TIME_OUT: 60000
+      VOLUME_NAME: 'diploma-temp-files'
+      COMPILE_CONTAINER_TIMEOUT: '20s'
+      COMPILE_IMAGE_NAME: 'diploma-compile-client'
     ports:
       - '8089:8089'
-  compile-client:
+  compile_and_run:
     image: diploma-compile-client
     build:
       context: .
