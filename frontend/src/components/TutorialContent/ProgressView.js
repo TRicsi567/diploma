@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton, LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import { useAppState } from 'state/App/context';
+import { useAppState } from 'App/context';
 import htmlParser from 'html-react-parser';
 import CodeHighlighter from './CodeHighlighter';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -130,11 +130,17 @@ const ProgressView = ({ slides, setDone, setState, state }) => {
     return slides[state.slide]
       .slice(0, state.step + 1)
       .reduce((result, step) => {
-        if (step.content) {
-          result.push(htmlParser(step.content));
+        if (step.text) {
+          result.push(
+            <React.Fragment key={step.text}>
+              {htmlParser(step.text)}
+            </React.Fragment>
+          );
         }
         if (step.code) {
-          result.push(<CodeHighlighter>{step.code}</CodeHighlighter>);
+          result.push(
+            <CodeHighlighter key={step.code}>{step.code}</CodeHighlighter>
+          );
         }
 
         return result;

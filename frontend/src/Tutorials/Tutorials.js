@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import All from './All';
 import CategoryAll from './CategoryAll';
-import Tutorial from 'view/Tutorial';
+import Tutorial from 'Tutorial';
 
 const Tutorials = () => {
   const match = useRouteMatch();

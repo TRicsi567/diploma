@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppState } from 'state/App/context';
+import { useAppState } from 'App/context';
 import { makeStyles } from '@material-ui/core';
 import htmlParser from 'html-react-parser';
 import { Grow } from '@material-ui/core';

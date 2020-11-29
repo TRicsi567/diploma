@@ -8,16 +8,16 @@ import {
   ListItem,
   ListItemText,
 } from '@material-ui/core';
-import { initialState, reducer } from 'state/SideDrawer';
+import { initialState, reducer } from './reducer';
 import {
   toggleEasy,
   toggleIntermediate,
   toggleProfessional,
-} from 'state/SideDrawer/actions';
-import CollapsibleListItem from 'view/components/CollapsibleListItem';
+} from 'components/SideDrawer/actions';
+import CollapsibleListItem from 'components/CollapsibleListItem';
 import { useHistory } from 'react-router-dom';
 import { difficultyLevels } from 'enums';
-import { useAppState } from 'state/App/context';
+import { useAppState } from 'App/context';
 
 const useStyles = makeStyles((theme) => ({
   logo: {

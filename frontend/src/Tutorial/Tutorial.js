@@ -1,13 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import CodeEditor from 'view/components/CodeEditor';
-import TutorialContent from 'view/components/TutorialContent';
+import CodeEditor from 'components/CodeEditor';
+import TutorialContent from 'components/TutorialContent';
 import { useRouteMatch } from 'react-router-dom';
 import directus from 'api/directus';
 import { useAsync } from 'react-async';
-import { useAppDispatch } from 'state/App/context';
-import { setLoading } from 'state/App/actions';
+import { useAppDispatch } from 'App/context';
+import { setLoading } from 'App/actions';
 import { Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
@@ -30,7 +30,7 @@ const promiseFn = async ({ url_alias }) => {
   const getTutorial = async () => {
     const { data } = await directus.getItems('tutorial', {
       single: 1,
-      fields: ['id', 'name'],
+      fields: ['id', 'name', 'slides', 'description'],
       filter: {
         url_alias: {
           rlike: url_alias,
@@ -39,42 +39,14 @@ const promiseFn = async ({ url_alias }) => {
     });
     return data;
   };
-  const getSlides = async (tutorialId) => {
-    const result = {};
-    const { data: slides } = await directus.getItems('slide', {
-      sort: 'order',
-      filter: {
-        tutorial_id: {
-          eq: tutorialId,
-        },
-      },
-    });
-
-    slides.forEach((slide) => {
-      result[slide.id] = [];
-    });
-
-    const { data: steps } = await directus.getItems('step', {
-      sort: 'id',
-      fields: ['content', 'slide_id', 'code'],
-      filter: {
-        slide_id: {
-          in: slides.map((slide) => slide.id).join(','),
-        },
-      },
-    });
-
-    steps.forEach((step) => {
-      result[step.slide_id].push({ content: step.content, code: step.code });
-    });
-
-    return Object.values(result);
-  };
 
   const tutorial = await getTutorial(url_alias);
 
-  const slides = await getSlides(tutorial.id);
-  return { slides, name: tutorial.name };
+  const slides = tutorial.slides.map(({ slide }) =>
+    slide.map(({ text, code }) => ({ text, code }))
+  );
+
+  return { ...tutorial, slides };
 };
 
 const Tutorial = () => {

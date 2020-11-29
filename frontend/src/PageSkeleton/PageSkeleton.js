@@ -1,15 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Footer from 'view/components/Footer';
-import Header from 'view/components/Header';
-import SideDrawer from 'view/components/SideDrawer';
+import Footer from 'components/Footer';
+import Header from 'components/Header';
+import SideDrawer from 'components/SideDrawer';
 import directus from 'api/directus';
-import { useAppDispatch, useAppState } from 'state/App/context';
-import {
-  setHomePageContent,
-  setLoading,
-  setTutorials,
-} from 'state/App/actions';
+import { useAppDispatch, useAppState } from 'App/context';
+import { setHomePageContent, setLoading, setTutorials } from 'App/actions';
 import { useAsync } from 'react-async';
 import { LinearProgress } from '@material-ui/core';
 

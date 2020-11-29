@@ -1,0 +1,26 @@
+[
+  {
+    "id": 15,
+    "collection_many": "step",
+    "field_many": "slide_id",
+    "collection_one": "slide",
+    "field_one": "steps",
+    "junction_field": null
+  },
+  {
+    "id": 16,
+    "collection_many": "slide",
+    "field_many": "status",
+    "collection_one": "slide",
+    "field_one": null,
+    "junction_field": null
+  },
+  {
+    "id": 17,
+    "collection_many": "slide",
+    "field_many": "tutorial_id",
+    "collection_one": "tutorial",
+    "field_one": "slides",
+    "junction_field": null
+  }
+]

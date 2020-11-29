@@ -1,12 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Grow } from '@material-ui/core';
-import TutorialCard from 'view/components/TutorialCard';
+import TutorialCard from 'components/TutorialCard';
+import { Grow, Tab, Tabs } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useAppState } from 'state/App/context';
+import { useAppState } from 'App/context';
+import TabPanel from 'components/TabPanel';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: {},
+  content: {
     overflow: 'auto',
     margin: [[theme.spacing(2), theme.spacing(5)]],
     display: 'grid',
@@ -17,10 +20,17 @@ const useStyles = makeStyles((theme) => ({
   skeleton: {},
 }));
 
-const All = () => {
+const tabValues = {
+  TUTORIAL: 'TUTORIAL',
+  EXERCISE: 'EXERCISE',
+};
+
+const CategoryAll = ({ category }) => {
   const classes = useStyles();
-  const history = useHistory();
   const { tutorials } = useAppState();
+  const history = useHistory();
+
+  const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL);
 
   const navigateToTutorial = React.useCallback(
     (tutorialName, difficulty) => (event) => {
@@ -31,9 +41,20 @@ const All = () => {
 
   return (
     <div className={classes.root}>
-      {Object.values(tutorials)
-        .flat()
-        .map((tutorial) => (
+      <Tabs
+        value={activeTab}
+        centered
+        onChange={(event, newValue) => {
+          setActiveTab(newValue);
+        }}>
+        <Tab value={tabValues.TUTORIAL} label='Leckék'></Tab>
+        <Tab value={tabValues.EXERCISE} label='Feladatok'></Tab>
+      </Tabs>
+      <TabPanel
+        index={tabValues.TUTORIAL}
+        value={activeTab}
+        className={classes.content}>
+        {tutorials[category].map((tutorial) => (
           <Grow key={tutorial.id} in>
             <div>
               <TutorialCard
@@ -54,8 +75,22 @@ const All = () => {
             </div>
           </Grow>
         ))}
+      </TabPanel>
+      <TabPanel
+        value={activeTab}
+        index={tabValues.EXERCISE}
+        className={classes.content}>
+        feladatok
+      </TabPanel>
     </div>
   );
 };
 
-export { All as default };
+CategoryAll.propTypes = {
+  category: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
+    .isRequired,
+};
+
+CategoryAll.defaultProps = {};
+
+export { CategoryAll as default };
