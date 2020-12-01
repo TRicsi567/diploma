@@ -4,12 +4,14 @@ import { makeStyles } from '@material-ui/styles';
 import CodeEditor from 'components/CodeEditor';
 import TutorialContent from 'components/TutorialContent';
 import { useRouteMatch } from 'react-router-dom';
-import directus from 'api/directus';
 import { useAsync } from 'react-async';
 import { useAppDispatch } from 'App/context';
 import { setLoading } from 'App/actions';
-import { Typography } from '@material-ui/core';
+import { Typography, Tabs, Tab, fade } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
+import TabPanel from 'components/TabPanel';
+import Exercises from 'Exercises';
+import { promiseFn, tabValues } from './state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,36 +26,23 @@ const useStyles = makeStyles((theme) => ({
   codeEditor: {
     marginTop: theme.spacing(4),
   },
+  description: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: fade(theme.palette.colors.fg1, 0.1),
+    marginBottom: theme.spacing(2),
+    borderLeft: [['solid', 4, theme.palette.colors.blue]],
+    paddingLeft: theme.spacing(2),
+    minHeight: 100,
+  },
 }));
-
-const promiseFn = async ({ url_alias }) => {
-  const getTutorial = async () => {
-    const { data } = await directus.getItems('tutorial', {
-      single: 1,
-      fields: ['id', 'name', 'slides', 'description'],
-      filter: {
-        url_alias: {
-          rlike: url_alias,
-        },
-      },
-    });
-    return data;
-  };
-
-  const tutorial = await getTutorial(url_alias);
-
-  const slides = tutorial.slides.map(({ slide }) =>
-    slide.map(({ text, code }) => ({ text, code }))
-  );
-
-  return { ...tutorial, slides };
-};
 
 const Tutorial = () => {
   const classes = useStyles();
 
   const { params } = useRouteMatch();
   const dispatch = useAppDispatch();
+  const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL);
 
   const { isLoading, data = {} } = useAsync({
     promiseFn,
@@ -69,8 +58,33 @@ const Tutorial = () => {
       <Typography variant='h4' align='center' className={classes.title}>
         {isLoading ? <Skeleton /> : data.name}
       </Typography>
-      <TutorialContent slides={data.slides} />
-      <CodeEditor className={classes.codeEditor} />
+      <Tabs
+        value={activeTab}
+        centered
+        onChange={(event, newValue) => {
+          setActiveTab(newValue);
+        }}>
+        <Tab value={tabValues.TUTORIAL} label='Lecke' />
+        <Tab value={tabValues.EXERCISE} label='Feladatok' />
+      </Tabs>
+      <TabPanel
+        index={tabValues.TUTORIAL}
+        value={activeTab}
+        className={classes.root}>
+        <div className={classes.description}>
+          <Typography align='justify'>
+            {isLoading ? <Skeleton /> : data.description}
+          </Typography>
+        </div>
+        <TutorialContent slides={data.slides} />
+        <CodeEditor className={classes.codeEditor} />
+      </TabPanel>
+      <TabPanel
+        index={tabValues.EXERCISE}
+        value={activeTab}
+        className={classes.root}>
+        {isLoading || <Exercises data={data.exercise} />}
+      </TabPanel>
     </div>
   );
 };

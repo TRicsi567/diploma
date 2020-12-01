@@ -71,6 +71,30 @@ const theme = createMuiTheme({
         borderColor: colors.fg0,
       },
     },
+    MuiFormControlLabel: {
+      disabled: {},
+      label: {
+        '&$disabled': {
+          color: colors.fg1,
+        },
+      },
+    },
+    MuiCheckbox: {
+      disabled: {},
+      colorSecondary: {
+        '&$disabled': {
+          color: colors.fg1,
+          margin: 4,
+          padding: 5,
+          backgroundColor: fade(colors.fg0, 0.1),
+        },
+      },
+      root: {
+        '&$disabled': {
+          backgroundColor: 'transparent',
+        },
+      },
+    },
     MuiListItem: {
       divider: {
         borderBottom: [[1, 'solid', 'white']],

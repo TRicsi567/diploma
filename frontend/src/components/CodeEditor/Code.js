@@ -7,6 +7,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/clike/clike';
 import { useField, useFormikContext } from 'formik';
+import debounce from 'utils/debounce';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,35 +18,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Code = (props) => {
-  const { className } = props;
+  const { className, name } = props;
   const classes = useStyles();
-  const [, meta] = useField('code');
-  const { setFieldValue } = useFormikContext();
+  const [, meta] = useField(name);
+  const { setFieldValue, submitCount } = useFormikContext();
   const ref = React.useRef(null);
   const codeMirror = React.useRef(null);
+  const prevSubmitCount = React.useRef(submitCount);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetValue = React.useCallback(
+    debounce((value) => {
+      setFieldValue(name, value);
+    }, 200),
+    [name, setFieldValue]
+  );
 
   React.useLayoutEffect(() => {
-    codeMirror.current = CodeMirror(
-      (editor) => {
-        ref.current.parentNode.replaceChild(editor, ref.current);
-      },
-      {
-        mode: CodeMirror.mimeModes['text/x-c++src'],
-        lineNumbers: true,
-        tabSize: 4,
-        theme: 'monokai',
-        value: meta.initialValue,
+    (() => {
+      if (!ref.current || !ref.current.parentNode) {
+        return;
       }
-    );
+      codeMirror.current = CodeMirror(
+        (editor) => {
+          ref.current.parentNode.replaceChild(editor, ref.current);
+        },
+        {
+          mode: CodeMirror.mimeModes['text/x-c++src'],
+          lineNumbers: true,
+          tabSize: 4,
+          theme: 'monokai',
+          value: meta.initialValue,
+        }
+      );
+    })();
   }, [meta.initialValue]);
 
   React.useEffect(() => {
     if (codeMirror.current) {
       codeMirror.current.on('change', (instance) => {
-        setFieldValue('code', instance.getValue());
+        debouncedSetValue(instance.getValue());
       });
     }
-  }, [setFieldValue]);
+
+    return () => {
+      if (debouncedSetValue.clear) {
+        debouncedSetValue.clear();
+      }
+    };
+  }, [debouncedSetValue]);
+
+  React.useEffect(() => {
+    // form reseted
+    if (prevSubmitCount.current !== 0 && submitCount === 0) {
+      codeMirror.current.doc.setValue(meta.initialValue);
+    }
+
+    prevSubmitCount.current = submitCount;
+  }, [submitCount, meta.initialValue]);
 
   return (
     <div className={clsx(className, classes.root)}>
@@ -57,6 +87,7 @@ const Code = (props) => {
 Code.propTypes = {
   className: PropTypes.string,
   initialValue: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 Code.defaultProps = {

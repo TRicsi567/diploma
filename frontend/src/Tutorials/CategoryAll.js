@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import TutorialCard from 'components/TutorialCard';
-import { Grow, Tab, Tabs } from '@material-ui/core';
+import { Grow } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useAppState } from 'App/context';
-import TabPanel from 'components/TabPanel';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -20,17 +19,10 @@ const useStyles = makeStyles((theme) => ({
   skeleton: {},
 }));
 
-const tabValues = {
-  TUTORIAL: 'TUTORIAL',
-  EXERCISE: 'EXERCISE',
-};
-
 const CategoryAll = ({ category }) => {
   const classes = useStyles();
   const { tutorials } = useAppState();
   const history = useHistory();
-
-  const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL);
 
   const navigateToTutorial = React.useCallback(
     (tutorialName, difficulty) => (event) => {
@@ -41,19 +33,7 @@ const CategoryAll = ({ category }) => {
 
   return (
     <div className={classes.root}>
-      <Tabs
-        value={activeTab}
-        centered
-        onChange={(event, newValue) => {
-          setActiveTab(newValue);
-        }}>
-        <Tab value={tabValues.TUTORIAL} label='Leckék'></Tab>
-        <Tab value={tabValues.EXERCISE} label='Feladatok'></Tab>
-      </Tabs>
-      <TabPanel
-        index={tabValues.TUTORIAL}
-        value={activeTab}
-        className={classes.content}>
+      <div className={classes.content}>
         {tutorials[category].map((tutorial) => (
           <Grow key={tutorial.id} in>
             <div>
@@ -75,13 +55,7 @@ const CategoryAll = ({ category }) => {
             </div>
           </Grow>
         ))}
-      </TabPanel>
-      <TabPanel
-        value={activeTab}
-        index={tabValues.EXERCISE}
-        className={classes.content}>
-        feladatok
-      </TabPanel>
+      </div>
     </div>
   );
 };

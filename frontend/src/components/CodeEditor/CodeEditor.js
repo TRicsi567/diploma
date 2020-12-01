@@ -90,7 +90,7 @@ const CodeEditor = ({ className }) => {
         onSubmit={handleSubmission}>
         <Form className={classes.form}>
           <TabPanel index={activeTab} value='code' className={classes.tabPanel}>
-            <Code />
+            <Code name='code' />
           </TabPanel>
           <TabPanel
             index={activeTab}
