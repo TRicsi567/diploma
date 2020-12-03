@@ -44,6 +44,10 @@ const Tutorial = () => {
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL);
 
+  const switchToExercises = React.useCallback(() => {
+    setActiveTab(tabValues.EXERCISE);
+  }, []);
+
   const { isLoading, data = {} } = useAsync({
     promiseFn,
     url_alias: params.id,
@@ -76,7 +80,10 @@ const Tutorial = () => {
             {isLoading ? <Skeleton /> : data.description}
           </Typography>
         </div>
-        <TutorialContent slides={data.slides} />
+        <TutorialContent
+          slides={data.slides}
+          switchToExercises={switchToExercises}
+        />
         <CodeEditor className={classes.codeEditor} />
       </TabPanel>
       <TabPanel

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, useFormikContext } from 'formik';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Quiz from './Quiz';
 
@@ -17,11 +17,15 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(3),
     },
   },
+  result: {
+    marginTop: theme.spacing(2),
+    fontSize: 24,
+  },
 }));
 
 const QuizForm = ({ quizzes, children }) => {
   const classes = useStyles();
-  const { submitCount, isSubmitting } = useFormikContext();
+  const { submitCount, isSubmitting, errors, values } = useFormikContext();
   return (
     <Form>
       {quizzes.map((quiz) => (
@@ -46,6 +50,11 @@ const QuizForm = ({ quizzes, children }) => {
           disabled={isSubmitting || !submitCount}>
           Újra
         </Button>
+        {!!submitCount && !isSubmitting && (
+          <Typography className={classes.result}>{`Eredmény: ${
+            Object.keys(values).length - Object.keys(errors).length
+          }/${Object.keys(values).length}`}</Typography>
+        )}
       </div>
     </Form>
   );

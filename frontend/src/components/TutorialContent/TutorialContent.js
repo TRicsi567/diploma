@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TutorialContent = ({ slides, className }) => {
+const TutorialContent = ({ slides, className, switchToExercises }) => {
   const classes = useStyles();
 
   const [done, setDone] = React.useState(false);
@@ -23,6 +23,7 @@ const TutorialContent = ({ slides, className }) => {
     <Paper className={classes.root}>
       {done ? (
         <DoneView
+          onExercise={switchToExercises}
           onRestart={() => {
             setDone(false);
             setState({ slide: 0, step: 0, progress: 0 });

@@ -4,6 +4,7 @@ import {
   RadioButtonUnchecked,
   Replay,
   KeyboardBackspace,
+  Assignment,
 } from '@material-ui/icons';
 import { makeStyles, Typography, Zoom, Button, Paper } from '@material-ui/core';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DoneView = ({ onRestart }) => {
+const DoneView = ({ onRestart, onExercise }) => {
   const classes = useStyles();
   const { params } = useRouteMatch();
   const history = useHistory();
@@ -61,6 +62,9 @@ const DoneView = ({ onRestart }) => {
           <Button onClick={onRestart}>
             <Replay className={classes.icon} />
             Újrakezdés
+          </Button>
+          <Button onClick={onExercise}>
+            <Assignment className={classes.icon} />A feladatokhoz
           </Button>
           <Button
             onClick={() => {
