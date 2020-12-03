@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: [['solid', 4, theme.palette.colors.blue]],
     paddingLeft: theme.spacing(2),
     minHeight: 100,
+    marginTop: theme.spacing(2),
   },
   question: { marginTop: theme.spacing(2) },
   code: { marginTop: theme.spacing(2) },
