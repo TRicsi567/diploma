@@ -17,7 +17,7 @@ const Tutorials = () => {
         {({ match: { params } }) => <CategoryAll category={params.category} />}
       </Route>
       <Route path={`${match.path}/:difficulty/:id`}>
-        <Tutorial />
+        {({ match: { params } }) => <Tutorial key={params.id} />}
       </Route>
     </Switch>
   );

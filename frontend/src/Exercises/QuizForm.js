@@ -28,10 +28,11 @@ const QuizForm = ({ quizzes, children }) => {
   const { submitCount, isSubmitting, errors, values } = useFormikContext();
   return (
     <Form>
-      {quizzes.map((quiz) => (
+      {Object.entries(quizzes).map(([id, quiz]) => (
         <Quiz
           className={classes.quiz}
-          key={quiz.question}
+          id={id}
+          key={id}
           question={quiz.question}
           options={quiz.options}
         />
@@ -41,7 +42,7 @@ const QuizForm = ({ quizzes, children }) => {
         <Button
           type='submit'
           variant='outlined'
-          disabled={submitCount || isSubmitting}>
+          disabled={!!submitCount || isSubmitting}>
           Ellenörzés
         </Button>
         <Button

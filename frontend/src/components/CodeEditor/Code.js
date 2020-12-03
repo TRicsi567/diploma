@@ -73,7 +73,6 @@ const Code = (props) => {
     if (prevSubmitCount.current !== 0 && submitCount === 0) {
       codeMirror.current.doc.setValue(meta.initialValue);
     }
-
     prevSubmitCount.current = submitCount;
   }, [submitCount, meta.initialValue]);
 

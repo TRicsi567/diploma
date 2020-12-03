@@ -8,7 +8,7 @@ import {
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { Formik, Form } from 'formik';
-import axios from 'axios';
+import axios from 'api/axios';
 import clsx from 'clsx';
 import TabPanel from './TabPanel';
 import ArgumentList from './ArgumentList';
@@ -60,7 +60,7 @@ const CodeEditor = ({ className }) => {
   const handleSubmission = async (values, actions) => {
     try {
       const args = Object.values(values.args).join(' ');
-      const { data } = await axios.post('http://localhost:8089/api/compile', {
+      const { data } = await axios.post('/compile', {
         code: values.code,
         args,
       });

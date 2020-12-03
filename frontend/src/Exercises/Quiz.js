@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: [[1, 'solid', theme.palette.colors.fg0]],
     marginBottom: theme.spacing(2),
     fontSize: 16,
+    whiteSpace: 'pre-wrap',
+    paddingBottom: theme.spacing(0.5),
   },
   option: {
     display: 'flex',
@@ -51,9 +53,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Quiz = ({ question, options, className }) => {
+const Quiz = ({ id, question, options, className }) => {
   const classes = useStyles();
-  const [field, meta, helpers] = useField(question);
+  const [field, meta, helpers] = useField(id);
   const { isSubmitting, submitCount } = useFormikContext();
 
   const icon = React.useMemo(() => {
@@ -73,28 +75,30 @@ const Quiz = ({ question, options, className }) => {
 
   return (
     <Paper className={clsx(classes.root, className)}>
-      {isSubmitting || !submitCount || icon}
-      <Typography className={classes.title}>{question}</Typography>
-      {Object.keys(options).map((text) => (
-        <div className={classes.option} key={text}>
-          <FormControlLabel
-            labelPlacement='start'
-            label={text}
-            disabled={isSubmitting || submitCount}
-            classes={{
-              root: classes.labelRoot,
-              label: classes.labelLabel,
-              labelPlacementStart: classes.labelPlacementStart,
-            }}
-            control={
-              <Checkbox
-                checked={field.value.includes(text)}
-                onChange={handleChange(text)}
-              />
-            }
-          />
-        </div>
-      ))}
+      <React.Fragment>
+        {isSubmitting || !submitCount || icon}
+        <Typography className={classes.title}>{question}</Typography>
+        {Object.keys(options).map((text) => (
+          <div className={classes.option} key={text}>
+            <FormControlLabel
+              labelPlacement='start'
+              label={text}
+              disabled={isSubmitting || !!submitCount}
+              classes={{
+                root: classes.labelRoot,
+                label: classes.labelLabel,
+                labelPlacementStart: classes.labelPlacementStart,
+              }}
+              control={
+                <Checkbox
+                  checked={field.value.includes(text)}
+                  onChange={handleChange(text)}
+                />
+              }
+            />
+          </div>
+        ))}
+      </React.Fragment>
     </Paper>
   );
 };

@@ -1,0 +1,51 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "question": "Írj egy olyan programot ami eltárolja (12 / 14.23) * 32.1 + 12 pontos végeredményét egy változóba majd kiírja az a standard outputra (cout)",
+      "solution": "39.0696",
+      "name": "Változók",
+      "description": "Gondoljunk a lebegőpontos ábrázolásra",
+      "quizzes": [
+        {
+          "newItem": true,
+          "question": "Al alábbiak közül melyik érvényes változónév?",
+          "options": {
+            "1egyalmafa": false,
+            "int12": true,
+            "_valtozo": true,
+            "do": false,
+            "var": true,
+            "$foobar": true
+          }
+        },
+        {
+          "newItem": true,
+          "question": "Az alábbiak közül melyek a helyes deklarációk?",
+          "options": {
+            "const int almafa;": false,
+            "const int almafa=12;": true,
+            "const int var1, var2 = 12;": false,
+            "int var1, var2;": true
+          }
+        },
+        {
+          "newItem": true,
+          "question": "int var1, var2 = 15; esetén mi lesz var1 értéke?",
+          "options": {
+            "15": false,
+            "nem definiált": true
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Almafa",
+      "solution": "null",
+      "name": "Pointerek",
+      "description": null,
+      "quizzes": null
+    }
+  ]
+}

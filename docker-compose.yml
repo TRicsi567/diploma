@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'directus'
+      MYSQL_USER: 'directus'
+      MYSQL_PASSWORD: 'directus'
+      MYSQL_ROOT_PASSWORD: 'directus'
+    volumes:
+      - backend-db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  directus:
+    image: directus/directus:v8.8-apache
+    ports:
+      - '8080:80'
+    environment:
+      DIRECTUS_APP_ENV: 'production'
+      DIRECTUS_AUTH_PUBLICKEY: 'some random secret'
+      DIRECTUS_AUTH_SECRETKEY: 'another random secret'
+      DIRECTUS_DATABASE_HOST: 'mysql'
+      DIRECTUS_DATABASE_PORT: '3306'
+      DIRECTUS_DATABASE_NAME: 'directus'
+      DIRECTUS_DATABASE_USERNAME: 'directus'
+      DIRECTUS_DATABASE_PASSWORD: 'directus'
+    volumes:
+      - ./data/config:/var/directus/config
+      - ./data/uploads:/var/directus/public/uploads
+    networks:
+      - directus
+  frontend:
+    image: diploma-frontend
+    build:
+      context: './frontend'
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - FRONTEND_PORT: 3000
+  backend:
+    image: diploma-backend
+    build:
+      context: './backend'
+      dockerfile: ./backend/src/server/Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - temp_files:/usr/temp
+    environment:
+      NODE_ENV: 'production'
+      PORT: 8089
+      VOLUME_NAME: 'diploma-temp-files'
+      COMPILE_CONTAINER_TIMEOUT: '20s'
+      COMPILE_IMAGE_NAME: 'diploma-compile-client'
+    ports:
+      - '8089:8089'
+  compile_and_run:
+    image: diploma-compile-client
+    build:
+      context: .
+      dockerfile: ./backend/src/client/Dockerfile
+
+volumes:
+  backend-db:
+  temp_files:
+    name: diploma-temp-files
+
+networks:
+  default:
+    name: 'diploma-network'
+#
+# docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:database"
+# docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:install -e <email> -p <password> -t C++ -T <acces-token>"
+#

@@ -17,10 +17,8 @@ const Exercises = ({ data }) => {
   const { question, solution, description, quizzes } = data;
   const initialValues = React.useMemo(
     () =>
-      quizzes.reduce(
-        (result, curr) => {
-          return { ...result, [curr.question]: [] };
-        },
+      Object.keys(quizzes).reduce(
+        (result, current) => ({ ...result, [current]: [] }),
         { code: initialCode }
       ),
     [quizzes]
@@ -28,23 +26,20 @@ const Exercises = ({ data }) => {
 
   const solutions = React.useMemo(
     () =>
-      quizzes.reduce(
-        (result, quiz) => ({
+      Object.entries(quizzes).reduce((result, [id, quiz]) => {
+        return {
           ...result,
-          [quiz.question]: Object.entries(quiz.options).reduce(
-            (result, [key, value]) => {
-              if (value) {
-                result.push(key);
-              }
-              return result;
-            },
-            []
-          ),
-        }),
-        {}
-      ),
+          [id]: Object.entries(quiz.options).reduce((result, [key, value]) => {
+            if (value) {
+              result.push(key);
+            }
+            return result;
+          }, []),
+        };
+      }, {}),
     [quizzes]
   );
+
   return (
     <div>
       <Formik
@@ -60,12 +55,10 @@ const Exercises = ({ data }) => {
               errors[key] = true;
             }
           });
-          const { data } = await axios.post(
-            'http://localhost:8089/api/compile',
-            {
-              code: values.code,
-            }
-          );
+
+          const { data } = await axios.post('/compile', {
+            code: values.code,
+          });
 
           if (
             String(data.stdout).trim().toLowerCase() !==
