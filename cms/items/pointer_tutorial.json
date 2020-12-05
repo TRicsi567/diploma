@@ -1,0 +1,163 @@
+{
+  "id": 2,
+  "status": "published",
+  "name": "Pointerek",
+  "difficulty": "intermediate",
+  "icon": 3,
+  "description": "Sok programozót rettegésben tartó szó, de nem kell félni egyáltalán nem bonyolultak. Engedd meg hogy megmutassuk.",
+  "url_alias": "pointerek",
+  "slides": [
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h1>Pointerek, * oper&aacute;tor</h1>\n<div class=\"thumb tright\">A * oper&aacute;tor haszn&aacute;ljuk a pointerek deklar&aacute;l&aacute;s&aacute;hoz, &eacute;s egyben a pointer &aacute;ltal mutatott &eacute;rt&eacute;k visszanyer&eacute;s&eacute;hez is.</div>\n<div class=\"thumb tright\">&nbsp;</div>\n<div class=\"thumb tright\">A poinerek fontos adat t&iacute;pusok speci&aacute;lis karakterisztik&aacute;juk miatt. Haszn&aacute;lhat&oacute;ak egy v&aacute;ltoz&oacute; megjel&ouml;l&eacute;s&eacute;re an&eacute;lk&uuml;l, hogy val&oacute;ban l&eacute;trehozn&aacute;nk egy ilyen t&iacute;pus&uacute; v&aacute;ltoz&oacute;t. Mivel kezdetben neh&eacute;z lehet meg&eacute;rteni őket, k&uuml;l&ouml;n&ouml;s figyelmet kell ford&iacute;tani a programoz&oacute;knak a hasznoss&aacute;guk meg&eacute;rt&eacute;s&eacute;re.</div>\n<div class=\"thumb tright\">&nbsp;</div>\n<div class=\"thumb tright\"><span>A pointereknek illő nevet kaptak. A pointer v&aacute;ltoz&oacute;k csak mem&oacute;riac&iacute;meket t&aacute;rolnak, &aacute;ltal&aacute;ban m&aacute;s v&aacute;ltoz&oacute;k c&iacute;meit. L&eacute;nyeg&eacute;ben egy m&aacute;sik v&aacute;ltoz&oacute; mem&oacute;riahely&eacute;re mutatnak, egy fenntartott helyre a sz&aacute;m&iacute;t&oacute;g&eacute;p mem&oacute;ri&aacute;j&aacute;ban. Pointerek seg&iacute;ts&eacute;g&eacute;vel &aacute;tadhatunk egy f&uuml;ggv&eacute;nynek v&aacute;ltoz&oacute;kat referencia szerint.</span><span> Ez lehetőv&eacute; teszi hogy a f&uuml;ggv&eacute;ny az aktu&aacute;lis v&aacute;ltoz&oacute;t m&oacute;dos&iacute;tsa ne pedig csak annak egy m&aacute;solat&aacute;t. Ak&aacute;r pointerre is lehet pointert csin&aacute;lni, &eacute;s &iacute;gy tov&aacute;bb.</span></div>"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>Deklar&aacute;ci&oacute;</h2>\n<p>A pointer deklar&aacute;ci&oacute; nagyon hasonl&iacute;t a sima v&aacute;ltoz&oacute;k deklar&aacute;ci&oacute;j&aacute;hoz. Mind&ouml;sszesen egy *-ot kell raknuk a t&iacute;pus neve m&ouml;g&eacute;. P&eacute;lda:</p>"
+        },
+        {
+          "newItem": true,
+          "code": "int* x;  // pointer to int. (C++ kódolási stílus)\nint * y; // pointer to int. (helyes, de nem használt formázási stílus)\nint *z;  // pointer to int. (C kódolási stílus)\nint*i;   // pointer to int. (helyes, de nem használt formázási stílus)"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Egyszerre t&ouml;bb v&aacute;ltoz&oacute; deklar&aacute;l&aacute;sa eset&eacute;n figyelj&uuml;nk a k&ouml;vetkező syntax-ra:</p>"
+        },
+        {
+          "newItem": true,
+          "code": "int* i, j;  // i int-re mutató pointer, j sima int\nint *i, *j; // i és j mindketten int-re mutató pointer"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Pointerre mutat&oacute; pointert a k&ouml;vetkező k&eacute;ppen tudunk l&eacute;trehozni</p>"
+        },
+        {
+          "newItem": true,
+          "code": "int **i;\nint ***i;"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>&Eacute;rt&eacute;kad&aacute;s</h2>\n<p>R&eacute;szeletes le&iacute;r&aacute;s helyett p&aacute;r p&eacute;ld&aacute;n kereszt&uuml;l mutatjuk be, &iacute;gy a t&ouml;bbs&eacute;g gyorsabban meg szokta &eacute;rteni a koncepci&oacute;t.</p>"
+        },
+        {
+          "newItem": true,
+          "text": "<h5>nem char t&iacute;pus&uacute; v&aacute;ltoz&oacute; eset&eacute;n:</h5>"
+        },
+        {
+          "newItem": true,
+          "code": "double vValue = 25.0;\ndouble* pValue = &vValue;\ncout << *pValue << endl;"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Az első sorban l&eacute;trehozunk egy double t&iacute;pus&uacute; v&aacute;ltoz&oacute;t &eacute;s a 25-&ouml;s kezdő&eacute;rt&eacute;ket adjuk neki.</p>\n<p>A m&aacute;sodik sorban deklar&aacute;lunk egy double pointert, &eacute;s kezdő &eacute;rt&eacute;knek adjuk neki a vValue v&aacute;ltoz&oacute; referenci&aacute;j&aacute;t. Ezt a <strong>&amp;(reference operator)&nbsp;</strong>seg&iacute;ts&eacute;g&eacute;vel tehetj&uuml;k meg. Majd a harmadik sorban kiiratjuk a pValue pointer &eacute;rt&eacute;k&eacute;t. Ezt a <strong>*(dereference operator) </strong>seg&iacute;ts&eacute;g&eacute;vel hajtjuk v&eacute;gre. A lent szereplő k&oacute;dford&iacute;t&oacute;ban ezt kipr&oacute;b&aacute;lhatjuk.</p>"
+        },
+        {
+          "newItem": true,
+          "text": "<h5>Char pointerre p&eacute;lda</h5>"
+        },
+        {
+          "newItem": true,
+          "code": "char pArray[20] = {\"Name1\"};\nchar* pValue(pArray);\npValue = \"Value1\";\ncout << pValue  << endl ;// Value1;"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>Dereferencing</h2>\n<p>Ez a * oper&aacute;tor. Akkor haszn&aacute;ljuk ha van egy pointer&uuml;nk &eacute;s meg szeretn&eacute;nk kapni az &eacute;rt&eacute;ket amit a v&aacute;ltoz&oacute; t&aacute;rol. P&eacute;lda:</p>"
+        },
+        {
+          "newItem": true,
+          "code": "#include <iostream>\n\nint main()\n{\n  int i;\n  int * p = &i;\n  i = 3;\n\n  std::cout<<*p<<std::endl; // prints \"3\"\n\n  return 0;\n}"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Megjegyz&eacute;s: *&amp;i kifejez&eacute;s helyes, ugyan nincs sok &eacute;rtelme. Visszaadn&aacute; i &eacute;rt&eacute;k&eacute;t.</p>"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Oszt&aacute;lyok eset&eacute;n probl&eacute;m&aacute;ba &uuml;tk&ouml;zhet&uuml;nk a * oper&aacute;tor haszn&aacute;latakor, mivel a . (member acces operator) elsőbbs&eacute;get &eacute;lev. Ezt a k&ouml;vetkezők&eacute;ppen tudjuk kiker&uuml;lni.</p>"
+        },
+        {
+          "newItem": true,
+          "code": "struct A { int num; };\n\nA a;\nint i;\nA * p;\n\np = &a;\na.num = 2;\n\ni = *p.num; // Error! \"p\" isn't a class, so you can't use \".\"\ni = (*p).num;"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Ez a syntaxis viszont el&eacute;g f&aacute;raszt&oacute; lehet ha van egy m&eacute;llyen objektumunk pl: &nbsp;<tt>(*(*(*(*MyPointer).Member).SubMember).Value).WhatIWant</tt></p>\n<p>Az ilyen esetekre vezett&eacute;k be az <strong>arrow operator</strong>-t.</p>\n<p>A fenti &aacute;ll&iacute;t&aacute;s a k&ouml;vetkezők&eacute;ppen is &iacute;rhat&oacute;:</p>\n<p><strong>MyPointer-&gt;Member-&gt;SubMember-&gt;Value-&gt;WhatIWant</strong></p>"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>Null pointer</h2>\n<p><span>A null pointer a pointerek egy speci&aacute;lis &aacute;llapota. Ez azt jelenti, hogy a pointer semmire sem mutat. Hib&aacute;t okoz, ha pullpointert pr&oacute;b&aacute;lunk derefer&aacute;lni (a&nbsp;</span><tt><span>*</span></tt><span>&nbsp;vagy&nbsp;</span><tt><span>-&gt;</span></tt><span> oper&aacute;torok seg&iacute;ts&eacute;g&eacute;vel). A null pointerre a konstans nulla haszn&aacute;lat&aacute;val hivatkozhatunk, p&eacute;ld&aacute;ul a k&ouml;vetkező k&eacute;ppen:</span></p>\n<div class=\"mw-highlight mw-highlight-lang-cpp mw-content-ltr\" dir=\"ltr\">&nbsp;</div>"
+        },
+        {
+          "newItem": true,
+          "code": "int i; \nint* p; \n\np  =  0 ;  // Null poitner\np  =  & i ;  // Nem a null pointer"
+        },
+        {
+          "newItem": true,
+          "text": "<p><span>Fontos, hogy eg&eacute;sz sz&aacute;mhoz nem rendelhet&uuml;nk pointert, m&eacute;g akkor sem, ha az nulla. &nbsp;A k&ouml;vetkező k&oacute;dsor p&eacute;ld&aacute;ul hib&aacute;s:</span></p>\n<div class=\"mw-highlight mw-highlight-lang-cpp mw-content-ltr\" dir=\"ltr\">&nbsp;</div>"
+        },
+        {
+          "newItem": true,
+          "code": "int  i  =  0 ; \nint  * p  =  i ;  // Hiba"
+        },
+        {
+          "newItem": true,
+          "text": "<p>Egy pointerről k&ouml;nnyel eld&ouml;nthetj&uuml;k, hogy nullpointer-e</p>"
+        },
+        {
+          "newItem": true,
+          "code": "#include  <iostream>\n\n\nint  main () \n{ \n  int* p = NULL; \n  int i;\n  \n  if(p == 0) // true\n  {\n \tstd::cout << \"Null pointer\" << std::endl;\n  }\n  \n  p = &i;\n  \n  if(p == 0) // false\n  {\n \tstd::cout << \"Null pointer\" << std::endl;\n  }\n  \n  \n\n\n  return  0; \n}"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>Pointer aritmetika</h2>\n<p>A t&ouml;mb&ouml;kre tekinthet&uuml;nk &uacute;gy is mint pointerek</p>"
+        },
+        {
+          "newItem": true,
+          "code": "int arr[] = {0, 1, 2, 3};\n\nstd::cout << arr[1] << std::endl; // 1\nstd::cout << *(arr+1) << std::endl; // 1\n"
+        },
+        {
+          "newItem": true,
+          "text": "<p>El&eacute;g ha csak a sz&aacute;mot &iacute;rjuk oda mennyi elem eltol&aacute;ssal szeretn&eacute;nk megkapni az &eacute;rt&eacute;ket, a ford&iacute;t&oacute; tudni fogja a t&iacute;pusrol annak pontos m&eacute;ret&eacute;t byte-ban &eacute;s megcsin&aacute;lja a m&ouml;g&ouml;tte l&eacute;vő matekot.</p>"
+        }
+      ]
+    },
+    {
+      "newItem": true,
+      "slide": [
+        {
+          "newItem": true,
+          "text": "<h2>Egy viszonylag r&ouml;vid de hasznos vide&oacute; a t&eacute;m&aacute;r&oacute;l</h2>\n<p><iframe src=\"https://www.youtube.com/embed/DTxHyVn0ODg\" width=\"713\" height=\"400\" allowfullscreen=\"allowfullscreen\"></iframe></p>"
+        }
+      ]
+    }
+  ],
+  "exercise": 2
+}

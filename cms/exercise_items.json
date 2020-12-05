@@ -1,51 +1,80 @@
-{
-  "data": [
-    {
-      "id": 1,
-      "question": "Írj egy olyan programot ami eltárolja (12 / 14.23) * 32.1 + 12 pontos végeredményét egy változóba majd kiírja az a standard outputra (cout)",
-      "solution": "39.0696",
-      "name": "Változók",
-      "description": "Gondoljunk a lebegőpontos ábrázolásra",
-      "quizzes": [
-        {
-          "newItem": true,
-          "question": "Al alábbiak közül melyik érvényes változónév?",
-          "options": {
-            "1egyalmafa": false,
-            "int12": true,
-            "_valtozo": true,
-            "do": false,
-            "var": true,
-            "$foobar": true
-          }
-        },
-        {
-          "newItem": true,
-          "question": "Az alábbiak közül melyek a helyes deklarációk?",
-          "options": {
-            "const int almafa;": false,
-            "const int almafa=12;": true,
-            "const int var1, var2 = 12;": false,
-            "int var1, var2;": true
-          }
-        },
-        {
-          "newItem": true,
-          "question": "int var1, var2 = 15; esetén mi lesz var1 értéke?",
-          "options": {
-            "15": false,
-            "nem definiált": true
-          }
+[
+  {
+    "id": 1,
+    "question": "Írj egy olyan programot ami eltárolja (12 / 14.23) * 32.1 + 12 pontos végeredményét egy változóba majd kiírja az a standard outputra (cout)",
+    "solution": "39.0696",
+    "name": "Változók",
+    "description": "Gondoljunk a lebegőpontos ábrázolásra",
+    "quizzes": [
+      {
+        "newItem": true,
+        "question": "Al alábbiak közül melyik érvényes változónév?",
+        "options": {
+          "1egyalmafa": false,
+          "int12": true,
+          "_valtozo": true,
+          "do": false,
+          "var": true,
+          "$foobar": true
         }
-      ]
-    },
-    {
-      "id": 3,
-      "question": "Almafa",
-      "solution": "null",
-      "name": "Pointerek",
-      "description": null,
-      "quizzes": null
-    }
-  ]
-}
+      },
+      {
+        "newItem": true,
+        "question": "Az alábbiak közül melyek a helyes deklarációk?",
+        "options": {
+          "const int almafa;": false,
+          "const int almafa=12;": true,
+          "const int var1, var2 = 12;": false,
+          "int var1, var2;": true
+        }
+      },
+      {
+        "newItem": true,
+        "question": "int var1, var2 = 15; esetén mi lesz var1 értéke?",
+        "options": {
+          "15": false,
+          "nem definiált": true
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "Írjon egy assingInt függvényt ami első paraméterben megkap egy int pointert, majd értékül adja neki a 74-es értéket. Utána irassa ki az eredeti változót a standard outputra (cout).",
+    "solution": "74",
+    "name": "Pointerek",
+    "description": null,
+    "quizzes": [
+      {
+        "newItem": true,
+        "question": "Az alábbiak közül melyik helyes pointer deklaráció?",
+        "options": {
+          "int* var1, var2;": false,
+          "int* var1, * var2;": true,
+          "double***** var;": true,
+          "*int var;": false
+        }
+      },
+      {
+        "newItem": true,
+        "question": "Mit ír ki a program?\nvoid fun(int *p) \n{ \n  int q = 10; \n  p = &q; \n}     \n   \nint main() \n{ \n  int r = 20; \n  int *p = &r; \n  fun(p); \n  printf(\"%d\", *p); \n  return 0; \n}",
+        "options": {
+          "10": false,
+          "20": true,
+          "fordítási hiba": false,
+          "futási hiba": false
+        }
+      },
+      {
+        "newItem": true,
+        "question": "Mit ír ki a program?\n#include <stdio.h>\nint main()\n{\n    int a[5] = {1,2,3,4,5};\n    int *ptr = (int*)(&a+1);\n    printf(\"%d %d\", *(a+1), *(ptr-1));\n    return 0;\n}\n",
+        "options": {
+          "2 5": true,
+          "memória szemét": false,
+          "fordítási hiba": false,
+          "futási hiba": false
+        }
+      }
+    ]
+  }
+]

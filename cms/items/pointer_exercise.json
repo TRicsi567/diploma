@@ -1,0 +1,39 @@
+{
+  "id": 2,
+  "question": "Írjon egy assingInt függvényt ami első paraméterben megkap egy int pointert, majd értékül adja neki a 74-es értéket. Utána irassa ki az eredeti változót a standard outputra (cout).",
+  "solution": "74",
+  "name": "Pointerek",
+  "description": null,
+  "quizzes": [
+    {
+      "newItem": true,
+      "question": "Az alábbiak közül melyik helyes pointer deklaráció?",
+      "options": {
+        "int* var1, var2;": false,
+        "int* var1, * var2;": true,
+        "double***** var;": true,
+        "*int var;": false
+      }
+    },
+    {
+      "newItem": true,
+      "question": "Mit ír ki a program?\nvoid fun(int *p) \n{ \n  int q = 10; \n  p = &q; \n}     \n   \nint main() \n{ \n  int r = 20; \n  int *p = &r; \n  fun(p); \n  printf(\"%d\", *p); \n  return 0; \n}",
+      "options": {
+        "10": false,
+        "20": true,
+        "fordítási hiba": false,
+        "futási hiba": false
+      }
+    },
+    {
+      "newItem": true,
+      "question": "Mit ír ki a program?\n#include <stdio.h>\nint main()\n{\n    int a[5] = {1,2,3,4,5};\n    int *ptr = (int*)(&a+1);\n    printf(\"%d %d\", *(a+1), *(ptr-1));\n    return 0;\n}\n",
+      "options": {
+        "2 5": true,
+        "memória szemét": false,
+        "fordítási hiba": false,
+        "futási hiba": false
+      }
+    }
+  ]
+}

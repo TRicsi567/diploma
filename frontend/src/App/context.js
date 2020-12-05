@@ -31,4 +31,10 @@ AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { AppProvider as default, useAppDispatch, useAppState };
+export {
+  AppProvider as default,
+  useAppDispatch,
+  useAppState,
+  AppDispatchContext,
+  AppStateContext,
+};

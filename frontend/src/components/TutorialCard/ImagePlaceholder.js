@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ImagePlaceholder = ({ type }) => {
+const ImagePlaceholder = ({ type, ...rest }) => {
   const classes = useStyles();
-  return <div className={clsx(classes.root, classes[type])} />;
+  return <div className={clsx(classes.root, classes[type])} {...rest} />;
 };
 
 ImagePlaceholder.propTypes = {

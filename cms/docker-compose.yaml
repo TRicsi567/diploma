@@ -30,12 +30,13 @@ services:
       DIRECTUS_DATABASE_PASSWORD: 'directus'
     volumes:
       - ./data/config:/var/directus/config
-      - ./data/uploads:/var/directus/public/uploads
+      - uploads:/var/directus/public/uploads
     networks:
       - directus
 
 volumes:
   backend-db:
+  uploads:
 
 networks:
   directus:

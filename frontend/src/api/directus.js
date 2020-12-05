@@ -6,6 +6,8 @@ const {
   REACT_APP_PROJECT_NAME = 'C++',
 } = process.env || {};
 
+console.log(REACT_APP_API_BASE_URL, REACT_APP_ACCESS_TOKEN);
+
 const client = new DirectusSDK({
   url: REACT_APP_API_BASE_URL,
   project: REACT_APP_PROJECT_NAME,

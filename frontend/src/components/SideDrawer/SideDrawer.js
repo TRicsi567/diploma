@@ -119,9 +119,7 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
                     button
                     key={tutorial.id}
                     onClick={navigateTo(
-                      `/tutorials/${difficulty}/${
-                        tutorial.url_alias || tutorial.id
-                      }`
+                      `/tutorials/${difficulty}/${tutorial.url_alias}`
                     )}>
                     <ListItemText>{tutorial.name}</ListItemText>
                   </ListItem>
@@ -134,9 +132,9 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
         <ListItem divider className={classes.menuTitle}>
           <ListItemText>hasznos linkek</ListItemText>
         </ListItem>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemText>Online fordító</ListItemText>
-        </ListItem>
+        </ListItem> */}
       </List>
     </SwipeableDrawer>
   );

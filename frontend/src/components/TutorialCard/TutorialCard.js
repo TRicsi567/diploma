@@ -83,9 +83,9 @@ const TutorialCard = React.forwardRef(function TutorialCard(props, ref) {
       <CardActionArea>
         <CardMedia className={classes.media}>
           {imageSrc ? (
-            <img src={imageSrc} alt='' />
+            <img src={imageSrc} alt='tutorial-illustration' />
           ) : (
-            <ImagePlaceholder type={difficulty} />
+            <ImagePlaceholder type={difficulty} data-testid='img-placeholder' />
           )}
         </CardMedia>
         <CardContent className={classes.cardContent}>

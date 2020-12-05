@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: 'directus'
       MYSQL_ROOT_PASSWORD: 'directus'
     volumes:
-      - backend-db:/var/lib/mysql
+      - db:/var/lib/mysql
     ports:
       - '3306:3306'
 
@@ -19,58 +19,55 @@ services:
       - '8080:80'
     environment:
       DIRECTUS_APP_ENV: 'production'
-      DIRECTUS_AUTH_PUBLICKEY: 'some random secret'
-      DIRECTUS_AUTH_SECRETKEY: 'another random secret'
+      DIRECTUS_AUTH_PUBLICKEY: '64421a62-27e0-4c56-b830-2c5da6a5da92'
+      DIRECTUS_AUTH_SECRETKEY: '317a5101-082e-4dcc-a30b-5580647a2c68'
       DIRECTUS_DATABASE_HOST: 'mysql'
       DIRECTUS_DATABASE_PORT: '3306'
       DIRECTUS_DATABASE_NAME: 'directus'
       DIRECTUS_DATABASE_USERNAME: 'directus'
       DIRECTUS_DATABASE_PASSWORD: 'directus'
     volumes:
-      - ./data/config:/var/directus/config
-      - ./data/uploads:/var/directus/public/uploads
-    networks:
-      - directus
+      - ./cms/data/config:/var/directus/config
+      - uploads:/var/directus/public/uploads
+
   frontend:
     image: diploma-frontend
     build:
       context: './frontend'
-      dockerfile: ./frontend/Dockerfile
     ports:
       - '3000:3000'
     environment:
-      - FRONTEND_PORT: 3000
+      PORT: ${FRONTEND_PORT}
+
   backend:
     image: diploma-backend
     build:
       context: './backend'
-      dockerfile: ./backend/src/server/Dockerfile
+      dockerfile: ./src/server/Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - temp_files:/usr/temp
     environment:
-      NODE_ENV: 'production'
-      PORT: 8089
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${BACKEND_PORT}
       VOLUME_NAME: 'diploma-temp-files'
-      COMPILE_CONTAINER_TIMEOUT: '20s'
       COMPILE_IMAGE_NAME: 'diploma-compile-client'
+      COMPILE_CONTAINER_TIMEOUT: ${COMPILE_CONTAINER_TIMEOUT}
     ports:
-      - '8089:8089'
-  compile_and_run:
+      - '8089:${BACKEND_PORT}'
+  compiler:
     image: diploma-compile-client
     build:
-      context: .
-      dockerfile: ./backend/src/client/Dockerfile
+      context: './backend'
+      dockerfile: ./src/client/Dockerfile
 
 volumes:
-  backend-db:
+  db:
+  uploads:
   temp_files:
     name: diploma-temp-files
 
-networks:
-  default:
-    name: 'diploma-network'
+    # run these commands at the first start, access-token must match ACCESS_TOKEN env variable
 #
 # docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:database"
-# docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:install -e <email> -p <password> -t C++ -T <acces-token>"
-#
+# docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:install -e <email> -p <password> -t C++ -T <access-token>"
