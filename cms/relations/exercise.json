@@ -1,0 +1,8 @@
+{
+  "id": 12,
+  "collection_many": "tutorial",
+  "field_many": "exercise",
+  "collection_one": "exercise",
+  "field_one": null,
+  "junction_field": null
+}

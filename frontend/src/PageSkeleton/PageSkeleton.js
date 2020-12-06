@@ -79,7 +79,16 @@ const promiseFn = async ({ dispatch }) => {
   });
 
   dispatch(setTutorials({ payload: result }));
-  dispatch(setHomePageContent({ payload: homePage.content }));
+  dispatch(
+    setHomePageContent({
+      homePage: homePage.content,
+      contact: {
+        email: homePage.contact_email,
+        phone: homePage.contact_phone,
+      },
+      usefulLinks: homePage.useful_links,
+    })
+  );
   return result;
 };
 

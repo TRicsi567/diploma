@@ -1,7 +1,9 @@
 import React from 'react';
 import { Paper, Typography, Link } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/styles';
 import { Email, Phone } from '@material-ui/icons';
+import { useAppState } from 'App/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     '& svg': {
       marginRight: theme.spacing(1),
     },
+    '& span': {
+      minWidth: 100,
+    },
   },
   contactWrapper: {
     display: 'inline-flex',
@@ -26,27 +31,35 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(1),
     },
   },
+  title: { textTransform: 'uppercase' },
 }));
 
 const Footer = () => {
   const classes = useStyles();
+  const { loading, contact } = useAppState();
   return (
     <Paper elevation={24} square className={classes.root} component='footer'>
       <div className={classes.contactWrapper}>
-        <Typography gutterBottom>Contact me:</Typography>
+        <Typography gutterBottom className={classes.title}>
+          Kontakt:
+        </Typography>
         <Link
           className={classes.link}
           color='textPrimary'
-          href='mailto:email@example.com'>
+          href={`mailto:${contact.email}`}>
           <Email />
-          <Typography component='span'>email@example.com</Typography>
+          <Typography component='span'>
+            {loading ? <Skeleton /> : contact.email}
+          </Typography>
         </Link>
         <Link
           className={classes.link}
           color='textPrimary'
-          href='tel:+36301111222'>
+          href={`mailto:${contact.phone}`}>
           <Phone />
-          <Typography component='span'>+36 30 11 11 222</Typography>
+          <Typography component='span'>
+            {loading ? <Skeleton /> : contact.phone}
+          </Typography>
         </Link>
       </div>
     </Paper>

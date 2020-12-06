@@ -31,6 +31,19 @@ const theme = createMuiTheme({
     colors,
   },
   overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        a: {
+          color: colors.violet,
+          '&:active': {
+            color: colors.violet,
+          },
+          '&:visited': {
+            color: colors.blue,
+          },
+        },
+      },
+    },
     MuiAppBar: {
       colorPrimary: {
         color: colors.fg0,

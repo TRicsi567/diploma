@@ -51,7 +51,7 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const { tutorials } = useAppState();
+  const { tutorials, usefulLinks } = useAppState();
 
   const history = useHistory();
 
@@ -129,12 +129,18 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
           );
         })}
 
-        <ListItem divider className={classes.menuTitle}>
-          <ListItemText>hasznos linkek</ListItemText>
-        </ListItem>
-        {/* <ListItem button>
-          <ListItemText>Online fordító</ListItemText>
-        </ListItem> */}
+        {usefulLinks && (
+          <React.Fragment>
+            <ListItem divider className={classes.menuTitle}>
+              <ListItemText>hasznos linkek</ListItemText>
+            </ListItem>
+            {Object.entries(usefulLinks).map(([label, link]) => (
+              <ListItem button component='a' href={link} key={link}>
+                <ListItemText>{label}</ListItemText>
+              </ListItem>
+            ))}
+          </React.Fragment>
+        )}
       </List>
     </SwipeableDrawer>
   );

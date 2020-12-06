@@ -70,7 +70,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"collection\": \"home\",\r\n  \"note\": null,\r\n  \"hidden\": false,\r\n  \"single\": true,\r\n  \"managed\": true,\r\n  \"fields\": {\r\n    \"id\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"id\",\r\n      \"datatype\": \"INT\",\r\n      \"unique\": false,\r\n      \"primary_key\": true,\r\n      \"auto_increment\": true,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": false,\r\n      \"id\": 195,\r\n      \"type\": \"integer\",\r\n      \"sort\": 0,\r\n      \"interface\": \"primary-key\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": true,\r\n      \"options\": null,\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"10\"\r\n    },\r\n    \"status\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"status\",\r\n      \"datatype\": \"VARCHAR\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": \"draft\",\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 196,\r\n      \"type\": \"status\",\r\n      \"sort\": 0,\r\n      \"interface\": \"status\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": true,\r\n      \"options\": {\r\n        \"status_mapping\": {\r\n          \"published\": {\r\n            \"name\": \"Published\",\r\n            \"value\": \"published\",\r\n            \"text_color\": \"white\",\r\n            \"background_color\": \"accent\",\r\n            \"browse_subdued\": false,\r\n            \"browse_badge\": true,\r\n            \"soft_delete\": false,\r\n            \"published\": true,\r\n            \"required_fields\": true\r\n          },\r\n          \"draft\": {\r\n            \"name\": \"Draft\",\r\n            \"value\": \"draft\",\r\n            \"text_color\": \"white\",\r\n            \"background_color\": \"blue-grey-100\",\r\n            \"browse_subdued\": true,\r\n            \"browse_badge\": true,\r\n            \"soft_delete\": false,\r\n            \"published\": false,\r\n            \"required_fields\": false\r\n          },\r\n          \"deleted\": {\r\n            \"name\": \"Deleted\",\r\n            \"value\": \"deleted\",\r\n            \"text_color\": \"white\",\r\n            \"background_color\": \"red\",\r\n            \"browse_subdued\": true,\r\n            \"browse_badge\": true,\r\n            \"soft_delete\": true,\r\n            \"published\": false,\r\n            \"required_fields\": false\r\n          }\r\n        }\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"20\"\r\n    },\r\n    \"owner\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"owner\",\r\n      \"datatype\": \"INT\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": false,\r\n      \"id\": 197,\r\n      \"type\": \"owner\",\r\n      \"sort\": 0,\r\n      \"interface\": \"owner\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": false,\r\n      \"options\": {\r\n        \"template\": \"{{first_name}} {{last_name}}\",\r\n        \"display\": \"both\"\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": true,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"10\"\r\n    },\r\n    \"created_on\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"created_on\",\r\n      \"datatype\": \"DATETIME\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 198,\r\n      \"type\": \"datetime_created\",\r\n      \"sort\": 0,\r\n      \"interface\": \"datetime-created\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": false,\r\n      \"options\": null,\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": true,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": null\r\n    },\r\n    \"content\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"content\",\r\n      \"datatype\": \"TEXT\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 199,\r\n      \"type\": \"string\",\r\n      \"sort\": null,\r\n      \"interface\": \"wysiwyg\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": true,\r\n      \"options\": {\r\n        \"tinymce_options\": null,\r\n        \"toolbar\": [\r\n          \"bold\",\r\n          \"italic\",\r\n          \"underline\",\r\n          \"removeformat\",\r\n          \"link\",\r\n          \"bullist\",\r\n          \"numlist\",\r\n          \"blockquote\",\r\n          \"h1\",\r\n          \"h2\",\r\n          \"h3\",\r\n          \"image\",\r\n          \"media\",\r\n          \"hr\",\r\n          \"code\",\r\n          \"fullscreen\"\r\n        ],\r\n        \"custom_formats\": null\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": null\r\n    }\r\n  },\r\n  \"icon\": \"home\",\r\n  \"translation\": null\r\n}\r\n",
+					"raw": "{\r\n  \"collection\": \"home\",\r\n  \"note\": null,\r\n  \"hidden\": false,\r\n  \"single\": true,\r\n  \"managed\": true,\r\n  \"fields\": {\r\n    \"id\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"id\",\r\n      \"datatype\": \"INT\",\r\n      \"unique\": false,\r\n      \"primary_key\": true,\r\n      \"auto_increment\": true,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": false,\r\n      \"id\": 195,\r\n      \"type\": \"integer\",\r\n      \"sort\": 0,\r\n      \"interface\": \"primary-key\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": true,\r\n      \"options\": null,\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"10\"\r\n    },\r\n    \"owner\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"owner\",\r\n      \"datatype\": \"INT\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": false,\r\n      \"id\": 197,\r\n      \"type\": \"owner\",\r\n      \"sort\": 0,\r\n      \"interface\": \"owner\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": false,\r\n      \"options\": {\r\n        \"template\": \"{{first_name}} {{last_name}}\",\r\n        \"display\": \"both\"\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": true,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"10\"\r\n    },\r\n    \"created_on\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"created_on\",\r\n      \"datatype\": \"DATETIME\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 198,\r\n      \"type\": \"datetime_created\",\r\n      \"sort\": 0,\r\n      \"interface\": \"datetime-created\",\r\n      \"hidden_detail\": true,\r\n      \"hidden_browse\": true,\r\n      \"required\": false,\r\n      \"options\": null,\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": true,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": null\r\n    },\r\n    \"content\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"content\",\r\n      \"datatype\": \"TEXT\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 199,\r\n      \"type\": \"string\",\r\n      \"sort\": null,\r\n      \"interface\": \"wysiwyg\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": true,\r\n      \"options\": {\r\n        \"tinymce_options\": null,\r\n        \"toolbar\": [\r\n          \"bold\",\r\n          \"italic\",\r\n          \"underline\",\r\n          \"removeformat\",\r\n          \"link\",\r\n          \"bullist\",\r\n          \"numlist\",\r\n          \"blockquote\",\r\n          \"h1\",\r\n          \"h2\",\r\n          \"h3\",\r\n          \"image\",\r\n          \"media\",\r\n          \"hr\",\r\n          \"code\",\r\n          \"fullscreen\",\r\n          \"aligncenter\",\r\n          \"alignjustify\",\r\n          \"alignleft\",\r\n          \"alignnone\",\r\n          \"alignright\",\r\n          \"forecolor\",\r\n          \"backcolor\",\r\n          \"strikethrough\",\r\n          \"subscript\",\r\n          \"superscript\",\r\n          \"unlink\",\r\n          \"h4\",\r\n          \"h5\",\r\n          \"h6\",\r\n          \"fontsizeselect\",\r\n          \"table\",\r\n          \"ltr rtl\"\r\n        ],\r\n        \"custom_formats\": null\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": null\r\n    },\r\n    \"contact_email\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"contact_email\",\r\n      \"datatype\": \"VARCHAR\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"Contact email displayed in the footer\",\r\n      \"signed\": true,\r\n      \"id\": 266,\r\n      \"type\": \"string\",\r\n      \"sort\": null,\r\n      \"interface\": \"text-input\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": true,\r\n      \"options\": {\r\n        \"iconLeft\": \"alternate_email\",\r\n        \"placeholder\": \"contact email\",\r\n        \"trim\": true,\r\n        \"showCharacterCount\": true,\r\n        \"formatValue\": false,\r\n        \"monospace\": false\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"200\"\r\n    },\r\n    \"contact_phone\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"contact_phone\",\r\n      \"datatype\": \"VARCHAR\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"phone number displayed in the footer\",\r\n      \"signed\": true,\r\n      \"id\": 267,\r\n      \"type\": \"string\",\r\n      \"sort\": null,\r\n      \"interface\": \"text-input\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": true,\r\n      \"options\": {\r\n        \"iconLeft\": \"local_phone\",\r\n        \"placeholder\": \"contact phone number\",\r\n        \"trim\": true,\r\n        \"showCharacterCount\": true,\r\n        \"formatValue\": false,\r\n        \"monospace\": false\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": \"200\"\r\n    },\r\n    \"useful_links\": {\r\n      \"collection\": \"home\",\r\n      \"field\": \"useful_links\",\r\n      \"datatype\": \"TEXT\",\r\n      \"unique\": false,\r\n      \"primary_key\": false,\r\n      \"auto_increment\": false,\r\n      \"default_value\": null,\r\n      \"note\": \"\",\r\n      \"signed\": true,\r\n      \"id\": 268,\r\n      \"type\": \"json\",\r\n      \"sort\": null,\r\n      \"interface\": \"key-value\",\r\n      \"hidden_detail\": false,\r\n      \"hidden_browse\": false,\r\n      \"required\": false,\r\n      \"options\": {\r\n        \"keyInterface\": \"text-input\",\r\n        \"keyType\": \"string\",\r\n        \"keyOptions\": {\r\n          \"placeholder\": \"Label\",\r\n          \"iconLeft\": \"label\"\r\n        },\r\n        \"valueInterface\": \"text-input\",\r\n        \"valueType\": \"string\",\r\n        \"valueOptions\": {\r\n          \"placeholder\": \"URL\",\r\n          \"iconLeft\": \"web\"\r\n        }\r\n      },\r\n      \"locked\": 0,\r\n      \"translation\": null,\r\n      \"readonly\": false,\r\n      \"width\": \"full\",\r\n      \"validation\": null,\r\n      \"group\": null,\r\n      \"length\": null\r\n    }\r\n  },\r\n  \"icon\": \"home\",\r\n  \"translation\": null\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,6 +87,35 @@
 					"path": [
 						"C++",
 						"collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create exercise relation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 12,\r\n  \"collection_many\": \"tutorial\",\r\n  \"field_many\": \"exercise\",\r\n  \"collection_one\": \"exercise\",\r\n  \"field_one\": null,\r\n  \"junction_field\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/c++/relations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"c++",
+						"relations"
 					]
 				}
 			},
@@ -207,6 +236,36 @@
 						"C++",
 						"items",
 						"exercise"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Home Page content",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"owner\": 1,\r\n  \"created_on\": \"2020-12-05T20:53:18+00:00\",\r\n  \"content\": \"<h1 dir=\\\"ltr\\\" style=\\\"text-align: center;\\\">K&ouml;sz&ouml;ntelek az oldalon</h1>\\n<p>T&ouml;r&ouml;k Rich&aacute;rd vagyok utols&oacute; &eacute;ves ELTE-IK hallgat&oacute;. Ezt az oldalt a C++ nyelv tanul&aacute;s&aacute;nak seg&iacute;ts&eacute;g&eacute;re hoztam l&eacute;tre. Egyben ez a diplomamunk&aacute;m is, a forr&aacute;sk&oacute;dot itt tal&aacute;lod meg: <a href=\\\"https://github.com/TRicsi567/diploma\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">https://github.com/TRicsi567/diploma</a></p>\\n<p><img src=\\\"http://localhost:8080/uploads/_/originals/b10501f8-49f6-48f8-8ded-b323b92ebefc.jpg\\\" alt=\\\"Foo\\\" width=\\\"1200\\\" height=\\\"630\\\" /></p>\",\r\n  \"contact_email\": \"email@example.com\",\r\n  \"contact_phone\": \"+31123123\",\r\n  \"useful_links\": {\r\n    \"Online fordító\": \"http://cpp.sh/\",\r\n    \"Dokumentáció\": \"https://en.cppreference.com/\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/c++/items/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"c++",
+						"items",
+						"home"
 					]
 				}
 			},

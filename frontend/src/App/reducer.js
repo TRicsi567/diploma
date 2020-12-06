@@ -4,6 +4,11 @@ const initialState = {
   tutorials: { easy: [], intermediate: [], professional: [] },
   homePage: null,
   loading: true,
+  contact: {
+    email: '',
+    phone: '',
+    links: {},
+  },
 };
 
 const reducer = (state, action) => {
@@ -13,7 +18,8 @@ const reducer = (state, action) => {
       return { ...state, tutorials: { ...payload } };
     }
     case actions.SET_HOME_PAGE_CONTENT: {
-      return { ...state, homePage: payload };
+      const { homePage, contact, usefulLinks } = payload;
+      return { ...state, homePage, contact, usefulLinks };
     }
     case actions.SET_LOADING: {
       return { ...state, loading: payload };

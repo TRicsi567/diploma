@@ -9,9 +9,13 @@ export const setTutorials = ({ payload }) => ({
   payload,
 });
 
-export const setHomePageContent = ({ payload }) => ({
+export const setHomePageContent = ({ homePage, contact, usefulLinks }) => ({
   type: actions.SET_HOME_PAGE_CONTENT,
-  payload,
+  payload: {
+    homePage,
+    contact,
+    usefulLinks,
+  },
 });
 
 export const setLoading = ({ payload }) => ({

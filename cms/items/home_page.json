@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "owner": 1,
+  "created_on": "2020-12-05T20:53:18+00:00",
+  "content": "<h1 dir=\"ltr\" style=\"text-align: center;\">K&ouml;sz&ouml;ntelek az oldalon</h1>\n<p>T&ouml;r&ouml;k Rich&aacute;rd vagyok utols&oacute; &eacute;ves ELTE-IK hallgat&oacute;. Ezt az oldalt a C++ nyelv tanul&aacute;s&aacute;nak seg&iacute;ts&eacute;g&eacute;re hoztam l&eacute;tre. Egyben ez a diplomamunk&aacute;m is, a forr&aacute;sk&oacute;dot itt tal&aacute;lod meg: <a href=\"https://github.com/TRicsi567/diploma\" target=\"_blank\" rel=\"noopener\">https://github.com/TRicsi567/diploma</a></p>\n<p><img src=\"http://localhost:8080/uploads/_/originals/b10501f8-49f6-48f8-8ded-b323b92ebefc.jpg\" alt=\"Foo\" width=\"1200\" height=\"630\" /></p>",
+  "contact_email": "email@example.com",
+  "contact_phone": "+31123123",
+  "useful_links": {
+    "Online fordító": "http://cpp.sh/",
+    "Dokumentáció": "https://en.cppreference.com/"
+  }
+}
