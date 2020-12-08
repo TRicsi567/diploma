@@ -1,8 +1,8 @@
-import React from 'react';
-import { Form, useFormikContext } from 'formik';
-import { Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import Quiz from './Quiz';
+import React from 'react'
+import { Form, useFormikContext } from 'formik'
+import { Button, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import Quiz from './Quiz'
 
 const useStyles = makeStyles((theme) => ({
   quiz: {
@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     fontSize: 24,
   },
-}));
+}))
 
 const QuizForm = ({ quizzes, children }) => {
-  const classes = useStyles();
-  const { submitCount, isSubmitting, errors, values } = useFormikContext();
+  const classes = useStyles()
+  const { submitCount, isSubmitting, errors, values } = useFormikContext()
   return (
     <Form>
       {Object.entries(quizzes).map(([id, quiz]) => (
@@ -42,13 +42,15 @@ const QuizForm = ({ quizzes, children }) => {
         <Button
           type='submit'
           variant='outlined'
-          disabled={!!submitCount || isSubmitting}>
-          Ellenörzés
+          disabled={!!submitCount || isSubmitting}
+        >
+          Ellenőrzés
         </Button>
         <Button
           type='reset'
           variant='contained'
-          disabled={isSubmitting || !submitCount}>
+          disabled={isSubmitting || !submitCount}
+        >
           Újra
         </Button>
         {!!submitCount && !isSubmitting && (
@@ -58,7 +60,7 @@ const QuizForm = ({ quizzes, children }) => {
         )}
       </div>
     </Form>
-  );
-};
+  )
+}
 
-export { QuizForm as default };
+export { QuizForm as default }
