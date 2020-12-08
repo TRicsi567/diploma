@@ -1,26 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/styles'
 import TutorialCard from 'view/components/TutorialCard'
 import { Grow } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useAppState } from 'view/App/context'
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  content: {
-    overflow: 'auto',
-    margin: [[theme.spacing(2), theme.spacing(5)]],
-    display: 'grid',
-    gridGap: theme.spacing(3),
-    gridAutoRows: '1.5fr',
-    gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
-  },
-  skeleton: {},
-}))
+import { useStylesCategory } from './styles'
 
 const CategoryAll = ({ category }) => {
-  const classes = useStyles()
+  const classes = useStylesCategory()
   const { tutorials } = useAppState()
   const history = useHistory()
 
