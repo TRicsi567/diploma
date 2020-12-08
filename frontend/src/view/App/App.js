@@ -1,11 +1,11 @@
-import React from 'react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import HomePage from 'HomePage';
-import PageSkeleton from 'PageSkeleton';
-import Tutorials from 'Tutorials';
-import AppProvider from './context';
-import theme from 'theme';
+import React from 'react'
+import { ThemeProvider, CssBaseline } from '@material-ui/core'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import HomePage from 'view/HomePage'
+import PageSkeleton from 'view/PageSkeleton'
+import Tutorials from 'view/Tutorials'
+import AppProvider from './context'
+import theme from 'theme'
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
         </AppProvider>
       </CssBaseline>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

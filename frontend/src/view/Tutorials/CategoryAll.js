@@ -1,12 +1,14 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Grow } from '@material-ui/core';
-import TutorialCard from 'components/TutorialCard';
-import { useHistory } from 'react-router-dom';
-import { useAppState } from 'App/context';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/styles'
+import TutorialCard from 'view/components/TutorialCard'
+import { Grow } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
+import { useAppState } from 'view/App/context'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: {},
+  content: {
     overflow: 'auto',
     margin: [[theme.spacing(2), theme.spacing(5)]],
     display: 'grid',
@@ -15,25 +17,24 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
   },
   skeleton: {},
-}));
+}))
 
-const All = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  const { tutorials } = useAppState();
+const CategoryAll = ({ category }) => {
+  const classes = useStyles()
+  const { tutorials } = useAppState()
+  const history = useHistory()
 
   const navigateToTutorial = React.useCallback(
     (tutorialName, difficulty) => (event) => {
-      history.push(`/tutorials/${difficulty}/${tutorialName}`);
+      history.push(`/tutorials/${difficulty}/${tutorialName}`)
     },
     [history]
-  );
+  )
 
   return (
     <div className={classes.root}>
-      {Object.values(tutorials)
-        .flat()
-        .map((tutorial) => (
+      <div className={classes.content}>
+        {tutorials[category].map((tutorial) => (
           <Grow key={tutorial.id} in>
             <div>
               <TutorialCard
@@ -54,8 +55,16 @@ const All = () => {
             </div>
           </Grow>
         ))}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export { All as default };
+CategoryAll.propTypes = {
+  category: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
+    .isRequired,
+}
+
+CategoryAll.defaultProps = {}
+
+export { CategoryAll as default }

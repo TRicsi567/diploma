@@ -1,14 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import TutorialCard from 'components/TutorialCard';
-import { Grow } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { useAppState } from 'App/context';
+import React from 'react'
+import { makeStyles } from '@material-ui/styles'
+import { Grow } from '@material-ui/core'
+import TutorialCard from 'view/components/TutorialCard'
+import { useHistory } from 'react-router-dom'
+import { useAppState } from 'view/App/context'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  content: {
+  root: {
     overflow: 'auto',
     margin: [[theme.spacing(2), theme.spacing(5)]],
     display: 'grid',
@@ -17,24 +15,25 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
   },
   skeleton: {},
-}));
+}))
 
-const CategoryAll = ({ category }) => {
-  const classes = useStyles();
-  const { tutorials } = useAppState();
-  const history = useHistory();
+const All = () => {
+  const classes = useStyles()
+  const history = useHistory()
+  const { tutorials } = useAppState()
 
   const navigateToTutorial = React.useCallback(
     (tutorialName, difficulty) => (event) => {
-      history.push(`/tutorials/${difficulty}/${tutorialName}`);
+      history.push(`/tutorials/${difficulty}/${tutorialName}`)
     },
     [history]
-  );
+  )
 
   return (
     <div className={classes.root}>
-      <div className={classes.content}>
-        {tutorials[category].map((tutorial) => (
+      {Object.values(tutorials)
+        .flat()
+        .map((tutorial) => (
           <Grow key={tutorial.id} in>
             <div>
               <TutorialCard
@@ -55,16 +54,8 @@ const CategoryAll = ({ category }) => {
             </div>
           </Grow>
         ))}
-      </div>
     </div>
-  );
-};
+  )
+}
 
-CategoryAll.propTypes = {
-  category: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
-    .isRequired,
-};
-
-CategoryAll.defaultProps = {};
-
-export { CategoryAll as default };
+export { All as default }

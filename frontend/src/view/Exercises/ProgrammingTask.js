@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles, Typography, fade } from '@material-ui/core';
-import { Code } from 'components/CodeEditor';
-import clsx from 'clsx';
-import { useFormikContext } from 'formik';
-import { Check, Clear } from '@material-ui/icons';
+import React from 'react'
+import { makeStyles, Typography, fade } from '@material-ui/core'
+import { Code } from 'view/components/CodeEditor'
+import clsx from 'clsx'
+import { useFormikContext } from 'formik'
+import { Check, Clear } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,18 +38,18 @@ const useStyles = makeStyles((theme) => ({
     top: 4,
     color: theme.palette.colors.green,
   },
-}));
+}))
 
 const ProgrammingTask = ({ question, description, className }) => {
-  const classes = useStyles();
-  const { errors, submitCount, isSubmitting } = useFormikContext();
+  const classes = useStyles()
+  const { errors, submitCount, isSubmitting } = useFormikContext()
 
   const icon = React.useMemo(() => {
     if (errors.code) {
-      return <Clear fontSize='large' className={classes.error} />;
+      return <Clear fontSize='large' className={classes.error} />
     }
-    return <Check fontSize='large' className={classes.correct} />;
-  }, [errors.code, classes.correct, classes.error]);
+    return <Check fontSize='large' className={classes.correct} />
+  }, [errors.code, classes.correct, classes.error])
 
   return (
     <div className={clsx(className, classes.root)}>
@@ -68,7 +68,7 @@ const ProgrammingTask = ({ question, description, className }) => {
       )}
       <Code name='code' className={classes.code} />
     </div>
-  );
-};
+  )
+}
 
-export { ProgrammingTask as default };
+export { ProgrammingTask as default }

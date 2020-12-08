@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ReactComponent as Logo } from 'res/logo.svg';
-import { makeStyles } from '@material-ui/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ReactComponent as Logo } from 'res/logo.svg'
+import { makeStyles } from '@material-ui/styles'
 import {
   SwipeableDrawer,
   List,
   ListItem,
   ListItemText,
-} from '@material-ui/core';
-import { initialState, reducer } from './reducer';
+} from '@material-ui/core'
+import { initialState, reducer } from './reducer'
 import {
   toggleEasy,
   toggleIntermediate,
   toggleProfessional,
-} from 'components/SideDrawer/actions';
-import CollapsibleListItem from 'components/CollapsibleListItem';
-import { useHistory } from 'react-router-dom';
-import { difficultyLevels } from 'enums';
-import { useAppState } from 'App/context';
+} from 'view/components/SideDrawer/actions'
+import CollapsibleListItem from 'view/components/CollapsibleListItem'
+import { useHistory } from 'react-router-dom'
+import { difficultyLevels } from 'enums'
+import { useAppState } from 'view/App/context'
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -44,46 +44,46 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'auto',
   },
   menuTitle: {},
-}));
+}))
 
 const SideDrawer = ({ open, onClose, onOpen }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(reducer, initialState)
 
-  const { tutorials, usefulLinks } = useAppState();
+  const { tutorials, usefulLinks } = useAppState()
 
-  const history = useHistory();
+  const history = useHistory()
 
   const navigateTo = React.useCallback(
     (location) => (clickEvent) => {
-      history.push(location);
-      onClose();
+      history.push(location)
+      onClose()
     },
     [history, onClose]
-  );
+  )
 
   const handleMenuItemClick = React.useCallback(
     (difficulty) => () => {
-      const { EASY, INTERMEDIATE, PROFESSIONAL } = difficultyLevels;
+      const { EASY, INTERMEDIATE, PROFESSIONAL } = difficultyLevels
       switch (difficulty) {
         case EASY: {
-          dispatch(toggleEasy());
-          break;
+          dispatch(toggleEasy())
+          break
         }
         case INTERMEDIATE: {
-          dispatch(toggleIntermediate());
-          break;
+          dispatch(toggleIntermediate())
+          break
         }
         case PROFESSIONAL: {
-          dispatch(toggleProfessional());
-          break;
+          dispatch(toggleProfessional())
+          break
         }
         default:
       }
     },
     []
-  );
+  )
 
   return (
     <SwipeableDrawer
@@ -91,7 +91,8 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
       anchor='left'
       open={open}
       onClose={onClose}
-      onOpen={onOpen}>
+      onOpen={onOpen}
+    >
       <Logo className={classes.logo} onClick={navigateTo('/')} />
       <List className={classes.menuList}>
         <ListItem divider className={classes.menuTitle}>
@@ -107,11 +108,13 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
               key={difficulty}
               title={value.label}
               onClick={handleMenuItemClick(difficulty)}
-              open={value.open}>
+              open={value.open}
+            >
               <List disablePadding>
                 <ListItem
                   button
-                  onClick={navigateTo(`/tutorials/${difficulty}`)}>
+                  onClick={navigateTo(`/tutorials/${difficulty}`)}
+                >
                   <ListItemText>összes</ListItemText>
                 </ListItem>
                 {tutorials[difficulty].map((tutorial) => (
@@ -120,13 +123,14 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
                     key={tutorial.id}
                     onClick={navigateTo(
                       `/tutorials/${difficulty}/${tutorial.url_alias}`
-                    )}>
+                    )}
+                  >
                     <ListItemText>{tutorial.name}</ListItemText>
                   </ListItem>
                 ))}
               </List>
             </CollapsibleListItem>
-          );
+          )
         })}
 
         {usefulLinks && (
@@ -143,13 +147,13 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
         )}
       </List>
     </SwipeableDrawer>
-  );
-};
+  )
+}
 
 SideDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-};
+}
 
-export { SideDrawer as default };
+export { SideDrawer as default }

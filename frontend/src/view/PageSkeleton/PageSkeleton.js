@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import Footer from 'components/Footer';
-import Header from 'components/Header';
-import SideDrawer from 'components/SideDrawer';
-import directus from 'api/directus';
-import { useAppDispatch, useAppState } from 'App/context';
-import { setHomePageContent, setLoading, setTutorials } from 'App/actions';
-import { useAsync } from 'react-async';
-import { LinearProgress } from '@material-ui/core';
+import React from 'react'
+import { makeStyles } from '@material-ui/styles'
+import Footer from 'view/components/Footer'
+import Header from 'view/components/Header'
+import SideDrawer from 'view/components/SideDrawer'
+import directus from 'api/directus'
+import { useAppDispatch, useAppState } from 'view/App/context'
+import { setHomePageContent, setLoading, setTutorials } from 'view/App/actions'
+import { useAsync } from 'react-async'
+import { LinearProgress } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: [[0, 'auto']],
   },
-}));
+}))
 
 const transformTumbnails = (thumbnails) => {
   return thumbnails
@@ -36,8 +36,8 @@ const transformTumbnails = (thumbnails) => {
         }),
         {}
       )
-    : null;
-};
+    : null
+}
 
 const promiseFn = async ({ dispatch }) => {
   const [{ data }, { data: imagesRaw }, { data: homePage }] = await Promise.all(
@@ -56,7 +56,7 @@ const promiseFn = async ({ dispatch }) => {
       }),
       directus.getItems('home', { single: 1 }),
     ]
-  );
+  )
 
   const images = imagesRaw.reduce(
     (acc, { id, data: imageData }) => ({
@@ -67,18 +67,18 @@ const promiseFn = async ({ dispatch }) => {
       },
     }),
     {}
-  );
+  )
 
-  const result = { easy: [], intermediate: [], professional: [] };
+  const result = { easy: [], intermediate: [], professional: [] }
 
   data.forEach((tutorial) => {
     result[tutorial.difficulty].push({
       ...tutorial,
       image: images[tutorial.icon],
-    });
-  });
+    })
+  })
 
-  dispatch(setTutorials({ payload: result }));
+  dispatch(setTutorials({ payload: result }))
   dispatch(
     setHomePageContent({
       homePage: homePage.content,
@@ -88,30 +88,30 @@ const promiseFn = async ({ dispatch }) => {
       },
       usefulLinks: homePage.useful_links,
     })
-  );
-  return result;
-};
+  )
+  return result
+}
 
 const PageSkeleton = ({ children }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
-  const dispatch = useAppDispatch();
-  const { loading } = useAppState();
+  const dispatch = useAppDispatch()
+  const { loading } = useAppState()
 
-  const { isLoading } = useAsync({ promiseFn, dispatch });
+  const { isLoading } = useAsync({ promiseFn, dispatch })
 
   React.useLayoutEffect(() => {
-    dispatch(setLoading({ payload: isLoading }));
-  }, [isLoading, dispatch]);
+    dispatch(setLoading({ payload: isLoading }))
+  }, [isLoading, dispatch])
 
   return (
     <div className={classes.root}>
       <div>
         <Header
           onMenuClick={() => {
-            setMenuOpen(true);
+            setMenuOpen(true)
           }}
         />
         {loading && <LinearProgress />}
@@ -119,16 +119,16 @@ const PageSkeleton = ({ children }) => {
       <SideDrawer
         open={menuOpen}
         onClose={() => {
-          setMenuOpen(false);
+          setMenuOpen(false)
         }}
         onOpen={() => {
-          setMenuOpen(true);
+          setMenuOpen(true)
         }}
       />
       <div className={classes.content}>{children}</div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export { PageSkeleton as default };
+export { PageSkeleton as default }
