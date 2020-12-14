@@ -58,7 +58,7 @@ app.post('/api/compile', (req, res) => {
   childProcess.exec(command, (err, stdout, stderr) => {
     if (err) {
       console.error('error', err);
-      res.status(420).send();
+      res.status(400).send();
       return;
     }
 
