@@ -66,8 +66,7 @@ volumes:
   uploads:
   temp_files:
     name: diploma-temp-files
-
-    # run these commands at the first start, access-token must match ACCESS_TOKEN env variable
+# run these commands at the first start, access-token must match ACCESS_TOKEN env variable
 #
 # docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:database"
 # docker-compose run --rm --entrypoint "/bin/sh -c" directus "/var/directus/bin/directus install:install -e <email> -p <password> -t C++ -T <access-token>"
