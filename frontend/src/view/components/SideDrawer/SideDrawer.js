@@ -1,23 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { ReactComponent as Logo } from 'res/logo.svg'
-import { makeStyles } from '@material-ui/styles'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ReactComponent as Logo } from 'res/logo.svg';
+import { makeStyles } from '@material-ui/styles';
 import {
   SwipeableDrawer,
   List,
   ListItem,
   ListItemText,
-} from '@material-ui/core'
-import { initialState, reducer } from './reducer'
+} from '@material-ui/core';
+import { initialState, reducer } from './reducer';
 import {
   toggleEasy,
   toggleIntermediate,
   toggleProfessional,
-} from 'view/components/SideDrawer/actions'
-import CollapsibleListItem from 'view/components/CollapsibleListItem'
-import { useHistory } from 'react-router-dom'
-import { difficultyLevels } from 'enums'
-import { useAppState } from 'view/App/context'
+} from 'view/components/SideDrawer/actions';
+import CollapsibleListItem from 'view/components/CollapsibleListItem';
+import { useHistory } from 'react-router-dom';
+import { difficultyLevels } from 'enums';
+import { useAppState } from 'view/App/context';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -44,46 +44,46 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'auto',
   },
   menuTitle: {},
-}))
+}));
 
 const SideDrawer = ({ open, onClose, onOpen }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const { tutorials, usefulLinks } = useAppState()
+  const { tutorials, usefulLinks } = useAppState();
 
-  const history = useHistory()
+  const history = useHistory();
 
   const navigateTo = React.useCallback(
     (location) => (clickEvent) => {
-      history.push(location)
-      onClose()
+      history.push(location);
+      onClose();
     },
     [history, onClose]
-  )
+  );
 
   const handleMenuItemClick = React.useCallback(
     (difficulty) => () => {
-      const { EASY, INTERMEDIATE, PROFESSIONAL } = difficultyLevels
+      const { EASY, INTERMEDIATE, PROFESSIONAL } = difficultyLevels;
       switch (difficulty) {
         case EASY: {
-          dispatch(toggleEasy())
-          break
+          dispatch(toggleEasy());
+          break;
         }
         case INTERMEDIATE: {
-          dispatch(toggleIntermediate())
-          break
+          dispatch(toggleIntermediate());
+          break;
         }
         case PROFESSIONAL: {
-          dispatch(toggleProfessional())
-          break
+          dispatch(toggleProfessional());
+          break;
         }
         default:
       }
     },
     []
-  )
+  );
 
   return (
     <SwipeableDrawer
@@ -130,7 +130,7 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
                 ))}
               </List>
             </CollapsibleListItem>
-          )
+          );
         })}
 
         {usefulLinks && (
@@ -147,13 +147,13 @@ const SideDrawer = ({ open, onClose, onOpen }) => {
         )}
       </List>
     </SwipeableDrawer>
-  )
-}
+  );
+};
 
 SideDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-}
+};
 
-export { SideDrawer as default }
+export { SideDrawer as default };

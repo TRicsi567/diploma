@@ -67,7 +67,9 @@ const CodeEditor = ({ className }) => {
 
       actions.setValues({ ...values, output: data.stdout || data.stderr });
       setActiveTab('output');
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -87,21 +89,31 @@ const CodeEditor = ({ className }) => {
           args: {},
           output: '',
         }}
-        onSubmit={handleSubmission}>
+        onSubmit={handleSubmission}
+      >
         <Form className={classes.form}>
-          <TabPanel index={activeTab} value='code' className={classes.tabPanel}>
+          <TabPanel
+            index={activeTab}
+            value='code'
+            className={classes.tabPanel}
+            data-testid='code-tab'
+          >
             <Code name='code' />
           </TabPanel>
           <TabPanel
             index={activeTab}
             value='arguments'
-            className={classes.tabPanel}>
+            className={classes.tabPanel}
+            data-testid='argument-list-tab'
+          >
             <ArgumentList />
           </TabPanel>
           <TabPanel
             index={activeTab}
             value='output'
-            className={clsx(classes.tabPanel, classes.output)}>
+            className={clsx(classes.tabPanel, classes.output)}
+            data-testid='output-tab'
+          >
             <Output />
           </TabPanel>
           <ProgressBar />

@@ -1,17 +1,17 @@
-import React from 'react'
+import React from 'react';
 // import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles'
-import CodeEditor from 'view/components/CodeEditor'
-import TutorialContent from 'view/components/TutorialContent'
-import { useRouteMatch } from 'react-router-dom'
-import { useAsync } from 'react-async'
-import { useAppDispatch } from 'view/App/context'
-import { setLoading } from 'view/App/actions'
-import { Typography, Tabs, Tab, fade } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
-import TabPanel from 'view/components/TabPanel'
-import Exercises from 'view/Exercises'
-import { promiseFn, tabValues } from './state'
+import { makeStyles } from '@material-ui/styles';
+import CodeEditor from 'view/components/CodeEditor';
+import TutorialContent from 'view/components/TutorialContent';
+import { useRouteMatch } from 'react-router-dom';
+import { useAsync } from 'react-async';
+import { useAppDispatch } from 'view/App/context';
+import { setLoading } from 'view/App/actions';
+import { Typography, Tabs, Tab, fade } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import TabPanel from 'view/components/TabPanel';
+import Exercises from 'view/Exercises';
+import { promiseFn, tabValues } from './state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,27 +35,27 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     minHeight: 100,
   },
-}))
+}));
 
 const Tutorial = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const { params } = useRouteMatch()
-  const dispatch = useAppDispatch()
-  const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL)
+  const { params } = useRouteMatch();
+  const dispatch = useAppDispatch();
+  const [activeTab, setActiveTab] = React.useState(tabValues.TUTORIAL);
 
   const switchToExercises = React.useCallback(() => {
-    setActiveTab(tabValues.EXERCISE)
-  }, [])
+    setActiveTab(tabValues.EXERCISE);
+  }, []);
 
   const { isLoading, data = {} } = useAsync({
     promiseFn,
     url_alias: params.id,
-  })
+  });
 
   React.useLayoutEffect(() => {
-    dispatch(setLoading({ payload: isLoading }))
-  }, [isLoading, dispatch])
+    dispatch(setLoading({ payload: isLoading }));
+  }, [isLoading, dispatch]);
 
   return (
     <div className={classes.root}>
@@ -66,7 +66,7 @@ const Tutorial = () => {
         value={activeTab}
         centered
         onChange={(event, newValue) => {
-          setActiveTab(newValue)
+          setActiveTab(newValue);
         }}
       >
         <Tab value={tabValues.TUTORIAL} label='Lecke' />
@@ -96,7 +96,7 @@ const Tutorial = () => {
         {isLoading || <Exercises data={data.exercise} />}
       </TabPanel>
     </div>
-  )
-}
+  );
+};
 
-export { Tutorial as default }
+export { Tutorial as default };

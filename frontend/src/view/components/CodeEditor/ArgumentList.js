@@ -61,7 +61,8 @@ const ArgumentList = (props) => {
           className={classes.addButton}
           onClick={() => {
             helpers.setValue({ ...field.value, [Date.now()]: '' });
-          }}>
+          }}
+        >
           <React.Fragment>
             <Typography component='span' className={classes.addButtonText}>
               Hozzáadás
@@ -74,10 +75,8 @@ const ArgumentList = (props) => {
         {Object.entries(field.value).map(([key, value], index) => (
           <Grow in key={key}>
             <div className={classes.argument}>
-              <Typography variant='body1' className={classes.order}>{`${
-                index + 1
-              }.`}</Typography>
               <OutlinedInput
+                placeholder={`${index + 1}. argumentum`}
                 value={value}
                 fullWidth
                 onChange={(event) => {
@@ -92,7 +91,8 @@ const ArgumentList = (props) => {
                   const nextState = { ...field.value };
                   delete nextState[key];
                   helpers.setValue(nextState);
-                }}>
+                }}
+              >
                 <Delete color='primary' fontSize='large' />
               </IconButton>
             </div>

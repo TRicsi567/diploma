@@ -7,8 +7,8 @@ const initialState = {
   contact: {
     email: '',
     phone: '',
-    links: {},
   },
+  usefulLinks: null,
 };
 
 const reducer = (state, action) => {

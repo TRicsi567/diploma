@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from 'testing';
-import { screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from 'testing';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';
 import SideDrawer from './SideDrawer';
 
@@ -16,7 +15,8 @@ const WrapperComponent = () => {
               type='button'
               onClick={() => {
                 setOpen(true);
-              }}>
+              }}
+            >
               open-menu
             </button>
             <SideDrawer
@@ -49,10 +49,19 @@ describe('<SideDrawer />', () => {
     // menu title is visible
     screen.getByText(/útmutatók/i);
 
-    expect(screen.queryByText(/változók/i)).not.toBeInTheDocument();
+    // useful links are visible
+    screen.getByText(/hasznos linkek/i);
 
-    // expand a submenu
+    // submenues are closed
+    expect(screen.queryByText(/változók/i)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/összes/i)).toHaveLength(1);
+
+    // expand all submenus
     fireEvent.click(screen.getByText(/könnyű/i));
+    fireEvent.click(screen.getByText(/közepes/i));
+    fireEvent.click(screen.getByText(/haladó/i));
+
+    expect(screen.getAllByText(/összes/i)).toHaveLength(4);
 
     expect(screen.queryByText(/változók/i)).toBeInTheDocument();
 
