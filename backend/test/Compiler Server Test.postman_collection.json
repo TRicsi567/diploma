@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "f312a9e0-dd01-49b6-bdd0-a5c5b117f4c5",
+		"name": "Compiler Server Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ping server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8089/ping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hiányzó forráskód",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8089/api/compile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"compile"
+					]
+				},
+				"description": "A szerver 400-as hibaüzenettel válaszol"
+			},
+			"response": []
+		},
+		{
+			"name": "Érvényes kérés",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"#include <iostream>\\n\\nint main(int argc, const char* argv[])\\n{\\n  std::cout << \\\"Hello World\\\" << std::endl;\\n  return 0;\\n}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/compile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"compile"
+					]
+				},
+				"description": "A kérés jól lefut, 200-as státuszkódot kapunk vissza. \r\nA válasz body-jában látszódik az stdout és stderr"
+			},
+			"response": []
+		},
+		{
+			"name": "Érvényes kérés argumentumokkal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"#include <iostream>\\n\\nint main(int argc, const char* argv[])\\n{\\n  for(int i=1; i<argc; ++i) {\\n    std::cout << argv[i] << \\\" \\\";\\n  }\\n  std::cout << std::endl;\\n  return 0;\\n}\",\r\n    \"args\": \"arg1 arg2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/compile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"compile"
+					]
+				},
+				"description": "A kérésben szereplő C++ forráskód kiíratja az argumentumokat, így azokat látnunk kell az stdout mezőben"
+			},
+			"response": []
+		},
+		{
+			"name": "Érvényes kérés fordítási hibával",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"#include <iostream>\\n\\nint main(int argc, const char* argv[])\\n{\\n  cout << \\\"Hello World\\\" << endl;\\n  return 0;\\n}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/compile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"compile"
+					]
+				},
+				"description": "A válasz stderr mezőjében látszik a fordítóprogram által generált hibaüzenet"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
