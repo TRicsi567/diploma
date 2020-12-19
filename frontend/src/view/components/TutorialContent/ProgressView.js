@@ -1,23 +1,23 @@
-import React from 'react'
-import { IconButton, LinearProgress } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import { ChevronLeft, ChevronRight } from '@material-ui/icons'
-import { useAppState } from 'view/App/context'
-import htmlParser from 'html-react-parser'
-import CodeHighlighter from './CodeHighlighter'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import React from 'react';
+import { IconButton, LinearProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { useAppState } from 'view/App/context';
+import htmlParser from 'html-react-parser';
+import CodeHighlighter from './CodeHighlighter';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const clamp = ({ num, max, min }) => {
   if (num <= min) {
-    return min
+    return min;
   }
 
   if (num >= max) {
-    return max
+    return max;
   }
 
-  return num
-}
+  return num;
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,21 +61,21 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 16,
     },
   },
-}))
+}));
 
 const useProgress = ({ slides, setDone, setState }) => {
   const totalProgress = React.useMemo(() => {
     if (!slides) {
-      return 0
+      return 0;
     }
 
-    return slides.reduce((sum, current) => sum + current.length, 0) - 1
-  }, [slides])
+    return slides.reduce((sum, current) => sum + current.length, 0) - 1;
+  }, [slides]);
 
   const handlePrevious = () => {
     setState(({ step, slide, progress }) => {
       if (slide === 0 && step - 1 < 0) {
-        return { step, slide, progress: 0 }
+        return { step, slide, progress: 0 };
       }
 
       if (step - 1 < 0) {
@@ -83,17 +83,17 @@ const useProgress = ({ slides, setDone, setState }) => {
           step: slides[slide - 1].length - 1,
           slide: clamp({ num: slide - 1, min: 0, max: slides.length - 1 }),
           progress: progress - 1,
-        }
+        };
       }
-      return { slide, step: step - 1, progress: progress - 1 }
-    })
-  }
+      return { slide, step: step - 1, progress: progress - 1 };
+    });
+  };
 
   const handleNext = () => {
     setState(({ step, slide, progress }) => {
       if (slide === slides.length - 1 && step === slides[slide].length - 1) {
-        setDone(true)
-        return { step, slide, progress: totalProgress }
+        setDone(true);
+        return { step, slide, progress: totalProgress };
       }
 
       if (step + 1 > slides[slide].length - 1) {
@@ -101,31 +101,31 @@ const useProgress = ({ slides, setDone, setState }) => {
           step: 0,
           slide: clamp({ num: slide + 1, min: 0, max: slides.length - 1 }),
           progress: progress + 1,
-        }
+        };
       }
 
-      return { slide, step: step + 1, progress: progress + 1 }
-    })
-  }
+      return { slide, step: step + 1, progress: progress + 1 };
+    });
+  };
 
-  return { handlePrevious, handleNext, totalProgress }
-}
+  return { handlePrevious, handleNext, totalProgress };
+};
 
 const ProgressView = ({ slides, setDone, setState, state }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const { handlePrevious, handleNext, totalProgress } = useProgress({
     slides,
     setDone,
     setState,
-  })
-  const { loading } = useAppState()
+  });
+  const { loading } = useAppState();
 
-  const progressPercent = Math.round((state.progress / totalProgress) * 100)
+  const progressPercent = Math.round((state.progress / totalProgress) * 100);
 
   const content = (() => {
     if (!slides) {
-      return null
+      return null;
     }
     return slides[state.slide]
       .slice(0, state.step + 1)
@@ -135,41 +135,42 @@ const ProgressView = ({ slides, setDone, setState, state }) => {
             <React.Fragment key={step.text}>
               {htmlParser(step.text)}
             </React.Fragment>
-          )
+          );
         }
         if (step.code) {
           result.push(
             <CodeHighlighter key={step.code}>{step.code}</CodeHighlighter>
-          )
+          );
         }
 
-        return result
-      }, [])
-  })()
+        return result;
+      }, []);
+  })();
 
-  const scrollRef = React.useRef(null)
+  const scrollRef = React.useRef(null);
 
   React.useLayoutEffect(() => {
-    ;(() => {
+    (() => {
       if (!scrollRef.current) {
-        return
+        return;
       }
 
-      const { scrollHeight } = scrollRef.current
+      const { scrollHeight } = scrollRef.current;
 
       scrollRef.current.scrollTo({
         top: scrollHeight,
         left: 0,
         behavior: 'smooth',
-      })
-    })()
-  })
+      });
+    })();
+  });
 
   return (
     <div className={classes.root}>
       <IconButton
         className={classes.button}
         onClick={handlePrevious}
+        data-testid='previous-step-button'
         disabled={
           clamp({
             num: progressPercent,
@@ -180,7 +181,11 @@ const ProgressView = ({ slides, setDone, setState, state }) => {
       >
         <ChevronLeft fontSize='large' />
       </IconButton>
-      <div className={classes.content} hidden={loading}>
+      <div
+        className={classes.content}
+        hidden={loading}
+        data-testid='slideshow-canvas'
+      >
         <div className={classes.scrollWrapper} ref={scrollRef}>
           {content}
         </div>
@@ -198,11 +203,15 @@ const ProgressView = ({ slides, setDone, setState, state }) => {
           }
         />
       </div>
-      <IconButton className={classes.button} onClick={handleNext}>
+      <IconButton
+        className={classes.button}
+        onClick={handleNext}
+        data-testid='next-step-button'
+      >
         <ChevronRight fontSize='large' />
       </IconButton>
     </div>
-  )
-}
+  );
+};
 
-export { ProgressView as default }
+export { ProgressView as default };

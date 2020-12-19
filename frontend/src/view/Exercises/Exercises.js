@@ -41,7 +41,7 @@ const Exercises = ({ data }) => {
   );
 
   return (
-    <div>
+    <div data-testid='exercises'>
       <Formik
         initialValues={initialValues}
         onSubmit={async (values, actions) => {
@@ -67,7 +67,8 @@ const Exercises = ({ data }) => {
             errors.code = true;
           }
           actions.setErrors(errors);
-        }}>
+        }}
+      >
         <QuizForm quizzes={quizzes}>
           {question && (
             <ProgrammingTask question={question} description={description} />

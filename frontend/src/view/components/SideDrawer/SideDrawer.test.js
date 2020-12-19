@@ -1,38 +1,36 @@
 import React from 'react';
 import { render, screen, fireEvent } from 'testing';
-import { MemoryRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import SideDrawer from './SideDrawer';
 
 const WrapperComponent = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <MemoryRouter initialEntries={['/']}>
-      <Switch>
-        <Route exact path='/'>
-          <div>
-            <button
-              type='button'
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              open-menu
-            </button>
-            <SideDrawer
-              open={open}
-              onClose={() => {
-                setOpen(false);
-              }}
-              onOpen={() => {
-                setOpen(true);
-              }}
-            />
-          </div>
-        </Route>
-        <Route path='*'>navigated-away</Route>
-      </Switch>
-    </MemoryRouter>
+    <Switch>
+      <Route exact path='/'>
+        <div>
+          <button
+            type='button'
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            open-menu
+          </button>
+          <SideDrawer
+            open={open}
+            onClose={() => {
+              setOpen(false);
+            }}
+            onOpen={() => {
+              setOpen(true);
+            }}
+          />
+        </div>
+      </Route>
+      <Route path='*'>navigated-away</Route>
+    </Switch>
   );
 };
 

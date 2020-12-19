@@ -20,7 +20,7 @@ const TutorialContent = ({ slides, className, switchToExercises }) => {
   const [state, setState] = React.useState({ slide: 0, step: 0, progress: 0 });
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} data-testid='tutorial-content'>
       {done ? (
         <DoneView
           onExercise={switchToExercises}

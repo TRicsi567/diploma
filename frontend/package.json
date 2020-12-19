@@ -35,6 +35,16 @@
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "!<rootDir>/src/view/Tutorial/state.js",
+      "!<rootDir>/src/utils/**/*.js",
+      "!<rootDir>/src/testing/**/*.js",
+      "!<rootDir>/src/api/**/*.js",
+      "!<rootDir>/src/index.js",
+      "!<rootDir>/src/serviceWorker.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",

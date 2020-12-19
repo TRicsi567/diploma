@@ -12,6 +12,7 @@ import { Skeleton } from '@material-ui/lab';
 import TabPanel from 'view/components/TabPanel';
 import Exercises from 'view/Exercises';
 import { promiseFn, tabValues } from './state';
+import NotFoundPage from 'view/NotFoundPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +49,7 @@ const Tutorial = () => {
     setActiveTab(tabValues.EXERCISE);
   }, []);
 
-  const { isLoading, data = {} } = useAsync({
+  const { isLoading, data = {}, isRejected } = useAsync({
     promiseFn,
     url_alias: params.id,
   });
@@ -56,6 +57,10 @@ const Tutorial = () => {
   React.useLayoutEffect(() => {
     dispatch(setLoading({ payload: isLoading }));
   }, [isLoading, dispatch]);
+
+  if (isRejected && !isLoading) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className={classes.root}>

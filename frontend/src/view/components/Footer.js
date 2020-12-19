@@ -1,9 +1,9 @@
-import React from 'react'
-import { Paper, Typography, Link } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
-import { makeStyles } from '@material-ui/styles'
-import { Email, Phone } from '@material-ui/icons'
-import { useAppState } from 'view/App/context'
+import React from 'react';
+import { Paper, Typography, Link } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/styles';
+import { Email, Phone } from '@material-ui/icons';
+import { useAppState } from 'view/App/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,11 +32,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: { textTransform: 'uppercase' },
-}))
+}));
 
 const Footer = () => {
-  const classes = useStyles()
-  const { loading, contact } = useAppState()
+  const classes = useStyles();
+  const { loading, contact = {} } = useAppState();
+
   return (
     <Paper elevation={24} square className={classes.root} component='footer'>
       <div className={classes.contactWrapper}>
@@ -65,7 +66,7 @@ const Footer = () => {
         </Link>
       </div>
     </Paper>
-  )
-}
+  );
+};
 
-export { Footer as default }
+export { Footer as default };

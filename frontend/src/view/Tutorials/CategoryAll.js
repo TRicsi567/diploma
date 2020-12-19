@@ -1,22 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import TutorialCard from 'view/components/TutorialCard'
-import { Grow } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
-import { useAppState } from 'view/App/context'
-import { useStylesCategory } from './styles'
+import React from 'react';
+import PropTypes from 'prop-types';
+import TutorialCard from 'view/components/TutorialCard';
+import { Grow } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { useAppState } from 'view/App/context';
+import { useStylesCategory } from './styles';
 
 const CategoryAll = ({ category }) => {
-  const classes = useStylesCategory()
-  const { tutorials } = useAppState()
-  const history = useHistory()
+  const classes = useStylesCategory();
+  const { tutorials } = useAppState();
+  const history = useHistory();
 
   const navigateToTutorial = React.useCallback(
     (tutorialName, difficulty) => (event) => {
-      history.push(`/tutorials/${difficulty}/${tutorialName}`)
+      history.push(`/tutorials/${difficulty}/${tutorialName}`);
     },
     [history]
-  )
+  );
 
   return (
     <div className={classes.root}>
@@ -29,7 +29,7 @@ const CategoryAll = ({ category }) => {
                 description={tutorial.description}
                 difficulty={tutorial.difficulty}
                 onClick={navigateToTutorial(
-                  tutorial.url_alias || tutorial.id,
+                  tutorial.url_alias,
                   tutorial.difficulty
                 )}
                 imageSrc={
@@ -44,14 +44,14 @@ const CategoryAll = ({ category }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 CategoryAll.propTypes = {
   category: PropTypes.oneOf(['easy', 'intermediate', 'professional'])
     .isRequired,
-}
+};
 
-CategoryAll.defaultProps = {}
+CategoryAll.defaultProps = {};
 
-export { CategoryAll as default }
+export { CategoryAll as default };
