@@ -3,11 +3,19 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
-const { PORT } = process.env;
+const { PORT = 3000 } = process.env;
 
-app.use(morgan('common'));
-app.use(express.static(path.resolve(__dirname, 'build')));
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/manifest.json', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'manifest.json'));
+});
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(PORT, () => {
-  console.log(`Frontend static server running on port: ${PORT}`);
+  console.log(`Server running on port: ${PORT}`);
 });
