@@ -38,6 +38,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
+      "<rootDir>/src/**/*.js",
       "!<rootDir>/src/view/Tutorial/state.js",
       "!<rootDir>/src/utils/**/*.js",
       "!<rootDir>/src/testing/**/*.js",

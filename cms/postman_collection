@@ -286,7 +286,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "198751aa-a132-47b0-9faa-3cc276a854b3",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -296,13 +295,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "680d54f7-1bec-4e0c-9ecd-82c2797b8e5e",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

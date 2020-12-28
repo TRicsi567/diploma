@@ -10,13 +10,15 @@ const useStyles = makeStyles((theme) => ({
 
 const SubmitButton = () => {
   const classes = useStyles();
-  const { isSubmitting, values } = useFormikContext();
+  const { isSubmitting, values, submitForm } = useFormikContext();
   return (
     <Button
-      type='submit'
+      type='button'
       variant='outlined'
       disabled={isSubmitting || !values.code}
-      className={classes.root}>
+      className={classes.root}
+      onClick={submitForm}
+    >
       fordít
     </Button>
   );
